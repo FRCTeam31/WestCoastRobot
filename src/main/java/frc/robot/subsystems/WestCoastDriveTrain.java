@@ -32,7 +32,7 @@ public class WestCoastDriveTrain extends SubsystemBase {
   // Drive Variables
   private WPI_TalonFX[] leftMotors;
   private WPI_TalonFX[] rightMotors;
-  private DifferentialDrive differentialDrive;
+  private DifferentialDrive differentialDrive;  
   // Sensor Variables
   private DifferentialDriveKinematics kinematics;
   private DifferentialDriveOdometry driveOdometry;

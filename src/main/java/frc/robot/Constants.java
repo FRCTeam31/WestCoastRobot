@@ -67,6 +67,8 @@ public final class Constants {
     public static final double SHOOTER_MOTOR_KI = 0;
     public static final double SHOOTER_MOTOR_KD = 0;
     public static final double SHOOTER_MOTOR_KF = 0;
+    public static final int SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS = 0;
+    public static final int SET_SHOOTER_SPEED_Bottom_SHOOTER_MOTOR_AXIS = 0;
 
     // Unit Conversion Constants
     public static final double FALCON_TICKS_TO_METERS = 2048.0 * 0.1; 
@@ -90,6 +92,8 @@ public final class Constants {
     public static final double TRAJECTORY_MAX_SPEED = 0;
 
     public static final double TRAJECTORY_MAX_ACCELERATION = 0;
+
+
 
 
 

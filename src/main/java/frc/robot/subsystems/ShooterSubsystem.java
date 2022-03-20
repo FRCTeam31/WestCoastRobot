@@ -46,7 +46,10 @@ public class ShooterSubsystem extends SubsystemBase {
     bottomMotor.set(ControlMode.Velocity, shooterSpeeds.bottomMotorSpeed);
     targetShooterSpeeds = shooterSpeeds;
   }
-
+  
+  /**
+   * Stops the Shooter Motors
+   */
   public void stopMotion() {
     topMotor.stopMotor();
     bottomMotor.stopMotor();

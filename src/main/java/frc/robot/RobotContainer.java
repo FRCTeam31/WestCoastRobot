@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.FieldOrientatedWestCoastDriveCommand;
+import frc.robot.commands.SetShooterSpeedCommand;
 import frc.robot.commands.SimpleWestCoastDriveCommand;
 import frc.robot.commands.TeleopControlIntakeCommand;
 import frc.robot.commands.TeleopControlTurretCommand;
@@ -85,8 +86,9 @@ public class RobotContainer {
   private TurretSubsystem turretSubsystem;
   private TeleopControlTurretCommand teleopControlTurretCommand;
 
-  // Shooter Shubsystem
+  // Shooter Subsystem
   private ShooterSubsystem shooterSubsystem;
+  private SetShooterSpeedCommand setShooterSpeedCommand;
 
   // Automation Commands
   private TrackTargetWithTurretCommand trackTargetWithTurretCommand;
@@ -186,6 +188,7 @@ public class RobotContainer {
     topShooterMotor.selectProfileSlot(0, 0);
     bottomShooterMotor.selectProfileSlot(0, 0);
     shooterSubsystem = new ShooterSubsystem(topShooterMotor, bottomShooterMotor);
+    setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_Bottom_SHOOTER_MOTOR_AXIS, joystick0, shooterSubsystem);
 
     // Automation Commands
     trackTargetWithTurretCommand = new TrackTargetWithTurretCommand(turretSubsystem, limelightVisionSubsystem);

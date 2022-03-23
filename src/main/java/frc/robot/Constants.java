@@ -19,11 +19,13 @@ public final class Constants {
 
     // User Input Constants
     public static final int JOYSTICK_0_PORT_NUMBER = 0;
-    public static final int CURRENT_BALL_SIGNATURE = 0;
+    public static final int CURRENT_BALL_SIGNATURE = 1;
 
     // Sensor Constants
     public static final int LIMELIGHT_MAX_TIME_WITH_NO_TARGET = 10;
     public static final int PIXY_MAX_TIME_WITH_NO_TARGET = 10;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY = 180; // Target distance measurement
+    public static double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX = 150; // Target horizontal value
 
     // Drive Train Constants
     // Drive Train Hardware Constants
@@ -42,6 +44,12 @@ public final class Constants {
     public static final double FIELD_ORIENTED_DRIVE_ANGLE_KD = 0;
     public static final double FIELD_ORIENTATED_DRIVE_ANGLE_DRIVE_ZONE = 5;
     public static final double DRIVE_TRAIN_WIDTH_METERS = 0.4;
+ 
+    // Track Ball with pixy command constants
+    public static double SAFE_TURN_RATE = 0.1;
+    public static double ANGLE_PID_KP = 0;
+    public static double ANGLE_PID_KI = 0;
+    public static double ANGLE_PID_KD = 0;
 
 
     // Drive Train Command Constants

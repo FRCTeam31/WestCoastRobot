@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import java.util.ArrayList;
 
 import edu.wpi.first.math.filter.LinearFilter;
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import io.github.pseudoresonance.pixy2api.Pixy2;
@@ -40,6 +39,8 @@ public class PixyVisionSubsystem extends SubsystemBase {
     System.out.println("PIXY CODE: " + pixy.init(5));
     this.maxTicksWithNoTarget = maxTicksWithNoTarget;
     this.signature = signature;
+    xFilter = LinearFilter.singlePoleIIR(0.075, 0.02);
+    yFilter = LinearFilter.singlePoleIIR(0.075, 0.02);
     prevX = 0.0;
     prevX2 = 0.0;
     prevY = 0.0;
@@ -119,10 +120,15 @@ public class PixyVisionSubsystem extends SubsystemBase {
       SmartDashboard.putNumber("Pixy Y", 99999);
     }
     else {
-      
       SmartDashboard.putNumber("Pixy X", filteredX);
       SmartDashboard.putNumber("Pixy Y", filteredY);
     }
-    SmartDashboard.putData((Sendable) pixy.getVideo()); // Not sure what this does
+  }
+
+  /**
+   * @return The filtered X value from the pixy
+   */
+  public Double getFilteredX(){
+    return filteredX;
   }
 }

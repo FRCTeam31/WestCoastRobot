@@ -97,14 +97,14 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Alighnment Constants
-    try {
-      alignmentConstants = new Properties();
-      alignmentConstants.load(new FileInputStream(ALIGNMENT_CONSTANTS_FILE_PATH));
-      System.out.println("---- Loading Alignment Constants SUCCEEDED ----");
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("---- Loading Alignment Constants FAILED ----");
-    }
+    // try {
+    //   alignmentConstants = new Properties();
+    //   alignmentConstants.load(new FileInputStream(ALIGNMENT_CONSTANTS_FILE_PATH));
+    //   System.out.println("---- Loading Alignment Constants SUCCEEDED ----");
+    // } catch (Exception e) {
+    //   e.printStackTrace();
+    //   System.out.println("---- Loading Alignment Constants FAILED ----");
+    // }
 
     // User Input Devices
     joystick0 = new Joystick(JOYSTICK_0_PORT_NUMBER);
@@ -119,79 +119,79 @@ public class RobotContainer {
     // Pixy Subsystem
     pixyVisionSubsystem = new PixyVisionSubsystem(Constants.PIXY_MAX_TIME_WITH_NO_TARGET, Constants.CURRENT_BALL_SIGNATURE);
 
-    // Drive Train
-    // Drive Train Hardware
-    leftDriveMotor1 = new WPI_TalonFX(LEFT_DRIVE_MOTOR_1_CAN_ID);
-    leftDriveMotor2 = new WPI_TalonFX(LEFT_DRIVE_MOTOR_2_CAN_ID);
-    leftDriveMotor3 = new WPI_TalonFX(LEFT_DRIVE_MOTOR_3_CAN_ID);
-    rightDriveMotor1 = new WPI_TalonFX(RIGHT_DRIVE_MOTOR_1_CAN_ID);
-    rightDriveMotor2 = new WPI_TalonFX(RIGHT_DRIVE_MOTOR_2_CAN_ID);
-    rightDriveMotor3 = new WPI_TalonFX(RIGHT_DRIVE_MOTOR_3_CAN_ID);
-    TalonFXConfiguration driveMotorConfig = new TalonFXConfiguration();
-    driveMotorConfig.slot0.kP = DRIVE_MOTOR_KP;
-    driveMotorConfig.slot0.kI = DRIVE_MOTOR_KI;
-    driveMotorConfig.slot0.kD = DRIVE_MOTOR_KD;
-    driveMotorConfig.slot0.kF = DRIVE_MOTOR_KF;
-    leftDriveMotor1.configAllSettings(driveMotorConfig);
-    leftDriveMotor2.configAllSettings(driveMotorConfig);
-    leftDriveMotor3.configAllSettings(driveMotorConfig);
-    rightDriveMotor1.configAllSettings(driveMotorConfig);
-    rightDriveMotor2.configAllSettings(driveMotorConfig);
-    rightDriveMotor3.configAllSettings(driveMotorConfig);
-    leftDriveMotor1.selectProfileSlot(0, 0);
-    leftDriveMotor2.selectProfileSlot(0, 0);
-    leftDriveMotor3.selectProfileSlot(0, 0);
-    rightDriveMotor1.selectProfileSlot(0, 0);
-    rightDriveMotor2.selectProfileSlot(0, 0);
-    rightDriveMotor3.selectProfileSlot(0, 0);
-    westCoastDriveTrain = new WestCoastDriveTrain(
-      new WPI_TalonFX[] {leftDriveMotor1, leftDriveMotor2, leftDriveMotor3}, 
-      new WPI_TalonFX[] {rightDriveMotor1, rightDriveMotor2, rightDriveMotor3},
-      navx,
-      Constants.DRIVE_TRAIN_WIDTH_METERS);
-    // Drive Train Commands
-    simpleWestCoastDriveCommand = new SimpleWestCoastDriveCommand(westCoastDriveTrain, joystick0, SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS);
-    westCoastDriveTrain.setDefaultCommand(simpleWestCoastDriveCommand);
-    fieldOrientatedWestCoastDriveCommand = new FieldOrientatedWestCoastDriveCommand(westCoastDriveTrain, joystick0);
+    // // Drive Train
+    // // Drive Train Hardware
+    // leftDriveMotor1 = new WPI_TalonFX(LEFT_DRIVE_MOTOR_1_CAN_ID);
+    // leftDriveMotor2 = new WPI_TalonFX(LEFT_DRIVE_MOTOR_2_CAN_ID);
+    // leftDriveMotor3 = new WPI_TalonFX(LEFT_DRIVE_MOTOR_3_CAN_ID);
+    // rightDriveMotor1 = new WPI_TalonFX(RIGHT_DRIVE_MOTOR_1_CAN_ID);
+    // rightDriveMotor2 = new WPI_TalonFX(RIGHT_DRIVE_MOTOR_2_CAN_ID);
+    // rightDriveMotor3 = new WPI_TalonFX(RIGHT_DRIVE_MOTOR_3_CAN_ID);
+    // TalonFXConfiguration driveMotorConfig = new TalonFXConfiguration();
+    // driveMotorConfig.slot0.kP = DRIVE_MOTOR_KP;
+    // driveMotorConfig.slot0.kI = DRIVE_MOTOR_KI;
+    // driveMotorConfig.slot0.kD = DRIVE_MOTOR_KD;
+    // driveMotorConfig.slot0.kF = DRIVE_MOTOR_KF;
+    // leftDriveMotor1.configAllSettings(driveMotorConfig);
+    // leftDriveMotor2.configAllSettings(driveMotorConfig);
+    // leftDriveMotor3.configAllSettings(driveMotorConfig);
+    // rightDriveMotor1.configAllSettings(driveMotorConfig);
+    // rightDriveMotor2.configAllSettings(driveMotorConfig);
+    // rightDriveMotor3.configAllSettings(driveMotorConfig);
+    // leftDriveMotor1.selectProfileSlot(0, 0);
+    // leftDriveMotor2.selectProfileSlot(0, 0);
+    // leftDriveMotor3.selectProfileSlot(0, 0);
+    // rightDriveMotor1.selectProfileSlot(0, 0);
+    // rightDriveMotor2.selectProfileSlot(0, 0);
+    // rightDriveMotor3.selectProfileSlot(0, 0);
+    // westCoastDriveTrain = new WestCoastDriveTrain(
+    //   new WPI_TalonFX[] {leftDriveMotor1, leftDriveMotor2, leftDriveMotor3}, 
+    //   new WPI_TalonFX[] {rightDriveMotor1, rightDriveMotor2, rightDriveMotor3},
+    //   navx,
+    //   Constants.DRIVE_TRAIN_WIDTH_METERS);
+    // // Drive Train Commands
+    // simpleWestCoastDriveCommand = new SimpleWestCoastDriveCommand(westCoastDriveTrain, joystick0, SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS);
+    // westCoastDriveTrain.setDefaultCommand(simpleWestCoastDriveCommand);
+    // fieldOrientatedWestCoastDriveCommand = new FieldOrientatedWestCoastDriveCommand(westCoastDriveTrain, joystick0);
 
 
-    // Intake Subsystem
-    WPI_TalonSRX intakeMotor = new WPI_TalonSRX(INTAKE_MOTOR_CAN_ID);
-    intakeSubsystem = new IntakeSubsystem(intakeMotor);
-    teleopControlIntakeCommand = new TeleopControlIntakeCommand(intakeSubsystem, joystick0, Constants.TELEOP_BALL_INTAKE_JOYSTICK_AXIS);
-    intakeSubsystem.setDefaultCommand(teleopControlIntakeCommand);
+    // // Intake Subsystem
+    // WPI_TalonSRX intakeMotor = new WPI_TalonSRX(INTAKE_MOTOR_CAN_ID);
+    // intakeSubsystem = new IntakeSubsystem(intakeMotor);
+    // teleopControlIntakeCommand = new TeleopControlIntakeCommand(intakeSubsystem, joystick0, Constants.TELEOP_BALL_INTAKE_JOYSTICK_AXIS);
+    // intakeSubsystem.setDefaultCommand(teleopControlIntakeCommand);
 
-    // Turret Subsystem
-    WPI_TalonFX turretMotor = new WPI_TalonFX(TURRET_MOTOR_CAN_ID);
-    TalonFXConfiguration turretMotorConfig = new TalonFXConfiguration();
-    turretMotorConfig.slot0.kP = TURRET_MOTOR_KP;
-    turretMotorConfig.slot0.kI = TURRET_MOTOR_KI;
-    turretMotorConfig.slot0.kD = TURRET_MOTOR_KD;
-    turretMotorConfig.slot0.kF = TURRET_MOTOR_KF;
-    turretMotor.configAllSettings(turretMotorConfig);
-    turretMotor.selectProfileSlot(0, 0);
-    turretSubsystem = new TurretSubsystem(turretMotor);
-    turretSubsystem.setMaxTurretAngle(TURRET_MAX_ANGLE);
-    teleopControlTurretCommand = new TeleopControlTurretCommand(turretSubsystem, joystick0, Constants.TELEOP_CONTROL_TURRET_JOYSTICK_AXIS);
-    turretSubsystem.setDefaultCommand(teleopControlTurretCommand);
+    // // Turret Subsystem
+    // WPI_TalonFX turretMotor = new WPI_TalonFX(TURRET_MOTOR_CAN_ID);
+    // TalonFXConfiguration turretMotorConfig = new TalonFXConfiguration();
+    // turretMotorConfig.slot0.kP = TURRET_MOTOR_KP;
+    // turretMotorConfig.slot0.kI = TURRET_MOTOR_KI;
+    // turretMotorConfig.slot0.kD = TURRET_MOTOR_KD;
+    // turretMotorConfig.slot0.kF = TURRET_MOTOR_KF;
+    // turretMotor.configAllSettings(turretMotorConfig);
+    // turretMotor.selectProfileSlot(0, 0);
+    // turretSubsystem = new TurretSubsystem(turretMotor);
+    // turretSubsystem.setMaxTurretAngle(TURRET_MAX_ANGLE);
+    // teleopControlTurretCommand = new TeleopControlTurretCommand(turretSubsystem, joystick0, Constants.TELEOP_CONTROL_TURRET_JOYSTICK_AXIS);
+    // turretSubsystem.setDefaultCommand(teleopControlTurretCommand);
 
     // Shooter Subsystem
-    WPI_TalonFX topShooterMotor = new WPI_TalonFX(TOP_SHOOTER_MOTOR_CAN_ID);
-    WPI_TalonFX bottomShooterMotor = new WPI_TalonFX(BOTTOM_SHOOTER_MOTOR_CAN_ID);
-    TalonFXConfiguration shooterMotorConfig = new TalonFXConfiguration();
-    shooterMotorConfig.slot0.kP = SHOOTER_MOTOR_KP;
-    shooterMotorConfig.slot0.kI = SHOOTER_MOTOR_KI;
-    shooterMotorConfig.slot0.kD = SHOOTER_MOTOR_KD;
-    shooterMotorConfig.slot0.kF = SHOOTER_MOTOR_KF;
-    topShooterMotor.configAllSettings(shooterMotorConfig);
-    bottomShooterMotor.configAllSettings(shooterMotorConfig);
-    topShooterMotor.selectProfileSlot(0, 0);
-    bottomShooterMotor.selectProfileSlot(0, 0);
-    shooterSubsystem = new ShooterSubsystem(topShooterMotor, bottomShooterMotor);
-    setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_Bottom_SHOOTER_MOTOR_AXIS, joystick0, shooterSubsystem);
+    // WPI_TalonFX topShooterMotor = new WPI_TalonFX(TOP_SHOOTER_MOTOR_CAN_ID);
+    // WPI_TalonFX bottomShooterMotor = new WPI_TalonFX(BOTTOM_SHOOTER_MOTOR_CAN_ID);
+    // TalonFXConfiguration shooterMotorConfig = new TalonFXConfiguration();
+    // shooterMotorConfig.slot0.kP = SHOOTER_MOTOR_KP;
+    // shooterMotorConfig.slot0.kI = SHOOTER_MOTOR_KI;
+    // shooterMotorConfig.slot0.kD = SHOOTER_MOTOR_KD;
+    // shooterMotorConfig.slot0.kF = SHOOTER_MOTOR_KF;
+    // topShooterMotor.configAllSettings(shooterMotorConfig);
+    // bottomShooterMotor.configAllSettings(shooterMotorConfig);
+    // topShooterMotor.selectProfileSlot(0, 0);
+    // bottomShooterMotor.selectProfileSlot(0, 0);
+    // shooterSubsystem = new ShooterSubsystem(topShooterMotor, bottomShooterMotor);
+    // setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_Bottom_SHOOTER_MOTOR_AXIS, joystick0, shooterSubsystem);
 
-    // Automation Commands
-    trackTargetWithTurretCommand = new TrackTargetWithTurretCommand(turretSubsystem, limelightVisionSubsystem);
+    // // Automation Commands
+    // trackTargetWithTurretCommand = new TrackTargetWithTurretCommand(turretSubsystem, limelightVisionSubsystem);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -204,8 +204,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    joystick0Button1.toggleWhenPressed(fieldOrientatedWestCoastDriveCommand, true);
-    joystick0Button2.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    // joystick0Button1.toggleWhenPressed(fieldOrientatedWestCoastDriveCommand, true);
+    // joystick0Button2.toggleWhenPressed(trackTargetWithTurretCommand, true);
   }
 
   /**

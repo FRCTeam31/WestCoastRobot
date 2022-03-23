@@ -131,4 +131,12 @@ public class PixyVisionSubsystem extends SubsystemBase {
   public Double getFilteredX(){
     return filteredX;
   }
+
+  /**
+   * 
+   * @return The filtered Y value from the pixy
+   */
+  public Double getFilteredY(){
+    return filteredY;
+  }
 }

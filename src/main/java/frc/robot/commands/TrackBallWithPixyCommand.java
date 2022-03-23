@@ -4,61 +4,90 @@
 
 package frc.robot.commands;
 
+
+
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.PixyVisionSubsystem;
 import frc.robot.subsystems.WestCoastDriveTrain;
-import io.github.pseudoresonance.pixy2api.Pixy2;
 
 public class TrackBallWithPixyCommand extends CommandBase {
   // instance variables
-  private int signature;
   private WestCoastDriveTrain westCoastDriveTrain;
-  private Pixy2 pixy;
+  private PixyVisionSubsystem pixy;
   private int maxTime;
-  private PixyVisionSubsystem pixyVisionSubsystem;
   private PIDController anglePID;
   private PIDController distancePID;
+  private Timer timer;
+  private int timeInTargetArea;
 
   /** Creates a new TrackBallWithPixyCommand. */
-  public TrackBallWithPixyCommand(WestCoastDriveTrain westCoastDriveTrain, Pixy2 pixy, int signature, int maxTime, PixyVisionSubsystem pixyVisionSubsystem) {
+  public TrackBallWithPixyCommand(WestCoastDriveTrain westCoastDriveTrain, PixyVisionSubsystem pixy, int maxTime) {
     this.westCoastDriveTrain = westCoastDriveTrain;
-    this.signature = signature;
     this.maxTime = maxTime;
     this.pixy = pixy;
+    anglePID = new PIDController(Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP, Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI, Constants.TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD);
+    distancePID = new PIDController(Constants.TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP, Constants.TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KI, Constants.TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KD);
+    timer = new Timer();
 
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(westCoastDriveTrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.reset();
+    timer.start();
+    anglePID.reset();
+    anglePID.setSetpoint(Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX);
+    distancePID.reset();
+    distancePID.setSetpoint(Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(pixyVisionSubsystem.getFilteredX() == null){
+    if(pixy.getFilteredX() == null){
+      // There is no current pixy target
       westCoastDriveTrain.simpleArcadeDrive(0, Constants.SAFE_TURN_RATE, false);
+      timeInTargetArea = 0;
     }
     else{
+      // There is a current pixy target
+      double x = pixy.getFilteredX();
+      double y = pixy.getFilteredY();
+      double linearPower = distancePID.calculate(x);
+      double angularPower = anglePID.calculate(y);
+      westCoastDriveTrain.simpleArcadeDrive(linearPower, angularPower, false);
 
+      // Update ball in target zone counter
+      if(Math.abs(distancePID.getPositionError()) < Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY_TOLERANCE &&
+        Math.abs(anglePID.getPositionError()) < Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX_TOLERANCE){
+        timeInTargetArea ++;
+      }
     }
 
   }
 
-  public void followBall(){
-
-
-  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    westCoastDriveTrain.stopArcadeDrive();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    // Timer exit condition
+    if(timer.get() > maxTime){
+      return true;
+    }
+
+    // Found ball exit condition
+    return timeInTargetArea > Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TIME_IN_TARGET_AREA;
   }
 }

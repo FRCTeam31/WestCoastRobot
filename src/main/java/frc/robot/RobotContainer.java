@@ -128,10 +128,10 @@ public class RobotContainer {
     rightDriveMotor2 = new WPI_TalonFX(RIGHT_DRIVE_MOTOR_2_CAN_ID);
     rightDriveMotor3 = new WPI_TalonFX(RIGHT_DRIVE_MOTOR_3_CAN_ID);
     TalonFXConfiguration driveMotorConfig = new TalonFXConfiguration();
-    driveMotorConfig.slot0.kP = DRIVE_MOTOR_KP;
-    driveMotorConfig.slot0.kI = DRIVE_MOTOR_KI;
-    driveMotorConfig.slot0.kD = DRIVE_MOTOR_KD;
-    driveMotorConfig.slot0.kF = DRIVE_MOTOR_KF;
+    driveMotorConfig.slot0.kP = DRIVE_TRAIN_FALCON_KP;
+    driveMotorConfig.slot0.kI = DRIVE_TRAIN_FALCON_KI;
+    driveMotorConfig.slot0.kD = DRIVE_TRAIN_FALCON_KD;
+    driveMotorConfig.slot0.kF = DRIVE_TRAIN_FALCON_KF;
     leftDriveMotor1.configAllSettings(driveMotorConfig);
     leftDriveMotor2.configAllSettings(driveMotorConfig);
     leftDriveMotor3.configAllSettings(driveMotorConfig);

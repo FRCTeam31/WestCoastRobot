@@ -19,11 +19,13 @@ public final class Constants {
 
     // User Input Constants
     public static final int JOYSTICK_0_PORT_NUMBER = 0;
-    public static final int CURRENT_BALL_SIGNATURE = 0;
+    public static final int CURRENT_BALL_SIGNATURE = 1;
 
     // Sensor Constants
     public static final int LIMELIGHT_MAX_TIME_WITH_NO_TARGET = 10;
     public static final int PIXY_MAX_TIME_WITH_NO_TARGET = 10;
+    public static  double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY = 180; // Target distance measurement
+    public static double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX = 150; // Target horizontal value
 
     // Drive Train Constants
     // Drive Train Hardware Constants
@@ -33,16 +35,35 @@ public final class Constants {
     public static final int RIGHT_DRIVE_MOTOR_1_CAN_ID = 3;
     public static final int RIGHT_DRIVE_MOTOR_2_CAN_ID = 4;
     public static final int RIGHT_DRIVE_MOTOR_3_CAN_ID = 5;
-    public static final double DRIVE_MOTOR_KP = 0;
-    public static final double DRIVE_MOTOR_KI = 0;
-    public static final double DRIVE_MOTOR_KD = 0;
-    public static final double DRIVE_MOTOR_KF = 0;
     public static final double FIELD_ORIENTED_DRIVE_ANGLE_KP = 0;
     public static final double FIELD_ORIENTED_DRIVE_ANGLE_KI = 0;
     public static final double FIELD_ORIENTED_DRIVE_ANGLE_KD = 0;
     public static final double FIELD_ORIENTATED_DRIVE_ANGLE_DRIVE_ZONE = 5;
     public static final double DRIVE_TRAIN_WIDTH_METERS = 0.4;
+    public static final double TURRET_DEGREES_TO_TICKS_CONSTANT = 3584; // Inverse of other number
+    public static final double DRIVE_TRAIN_FEED_FORWARD_KS = 0;
+    public static final double DRIVE_TRAIN_FEED_FORWARD_KV = 0;
+    public static final double DRIVE_TRAIN_FEED_FORWARD_KA = 0;
+    public static final double DRIVE_TRAIN_PID_KP = 0;
+    public static final double DRIVE_TRAIN_PID_KI = 0;
+    public static final double DRIVE_TRAIN_PID_KD = 0;
+    public static final double DRIVE_TRAIN_FALCON_KP = 0;
+    public static final double DRIVE_TRAIN_FALCON_KI = 0;
+    public static final double DRIVE_TRAIN_FALCON_KD = 0;
+    public static final double DRIVE_TRAIN_FALCON_KF = 0;
 
+ 
+    // Track Ball with pixy command constants
+    public static double SAFE_TURN_RATE = 0.1;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KD = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KI = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY_TOLERANCE = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX_TOLERANCE = 0;
+    public static final int TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TIME_IN_TARGET_AREA = 0;
 
     // Drive Train Command Constants
     public static final boolean SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS = true;
@@ -75,23 +96,13 @@ public final class Constants {
     public static final double TURRET_TICKS_TO_DEGREES_CONSTANT =  2.790178571e-4; //1 * (1 / 2048) * (1 / 45) * (1 / 14) * ( 360 / 1);
     // Convert from ticks to motor rotations (1 motor rotation per 2048 ticks) to turret rotations 
     // (1 turret rotation per 45 motor rotations) degrees (360 degrees per rotation)
-    public static final double TURRET_DEGREES_TO_TICKS_CONSTANT = 3584; // Inverse of other number
-
-    public static final double DRIVE_TRAIN_FEED_FORWARD_KS = 0;
-
-    public static final double DRIVE_TRAIN_FEED_FORWARD_KV = 0;
-
-    public static final double DRIVE_TRAIN_FEED_FORWARD_KA = 0;
-
-    public static final double DRIVE_TRAIN_PID_KP = 0;
-
-    public static final double DRIVE_TRAIN_PID_KI = 0;
-
-    public static final double DRIVE_TRAIN_PID_KD = 0;
-
+   
+    // Trajectory Constants
     public static final double TRAJECTORY_MAX_SPEED = 0;
-
     public static final double TRAJECTORY_MAX_ACCELERATION = 0;
+
+
+
 
 
 

@@ -45,6 +45,7 @@ public class TrackBallWithPixyCommand extends CommandBase {
     anglePID.setSetpoint(Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX);
     distancePID.reset();
     distancePID.setSetpoint(Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY);
+    timeInTargetArea = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

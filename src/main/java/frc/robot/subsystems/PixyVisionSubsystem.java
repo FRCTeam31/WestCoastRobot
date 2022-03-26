@@ -126,7 +126,7 @@ public class PixyVisionSubsystem extends SubsystemBase {
   }
 
   /**
-   * @return The filtered X value from the pixy
+   * @return The filtered X value from the pixy. Null if no target has been found for too long
    */
   public Double getFilteredX(){
     return filteredX;

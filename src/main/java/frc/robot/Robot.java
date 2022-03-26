@@ -25,7 +25,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  Trajectory trajectory;
+  Trajectory trajectory = new Trajectory();
+  String trajectoryPathJson = "Paths/StartToFirstBall.wpilib.json";
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -33,7 +34,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Path trajectoryPath = Filesystem.getLaunchDirectory().toPath().resolve("src/main/java/frc/robot/PursellJaques/Paths/FirstBallToSecondBall.wpilib.json");
+    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryPathJson);
     try {
       trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
     } catch (IOException e) {

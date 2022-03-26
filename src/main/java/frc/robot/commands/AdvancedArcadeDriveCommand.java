@@ -6,29 +6,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.WestCoastDriveTrain;
 
-/**
- * A command that allowes simple driving with the WestCoastDriveTrain subsystem
- */
-public class SimpleWestCoastDriveCommand extends CommandBase {
-  // Instance Variables
-  private WestCoastDriveTrain westCoastDrive;
-  private Joystick joystick;
-  private boolean squareInputs;
-
-  /** Creates a new SimpleWestCoastDriveCommand.
-   * @param westCoastDrive The west coast drive system
-   * @param joystick the joystick that will control the driving
-   * @param squareInputs whether or not to square inputs
-   */
-  public SimpleWestCoastDriveCommand(WestCoastDriveTrain westCoastDrive, Joystick joystick, boolean squareInputs) {
+public class AdvancedArcadeDriveCommand extends CommandBase {
+  //instance variables
+  WestCoastDriveTrain westCoastDriveTrain;
+  Joystick joystick;
+  /** Creates a new AdvancedArcadeDriveCommand. */
+  public AdvancedArcadeDriveCommand(WestCoastDriveTrain westCoastDriveTrain, Joystick joystick) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(westCoastDrive);
-
-    this.westCoastDrive = westCoastDrive;
+    this.westCoastDriveTrain = westCoastDriveTrain;
     this.joystick = joystick;
-    this.squareInputs = squareInputs;
   }
 
   // Called when the command is initially scheduled.
@@ -38,13 +27,16 @@ public class SimpleWestCoastDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    westCoastDrive.simpleArcadeDrive(joystick.getRawAxis(3), joystick.getRawAxis(1), squareInputs);
+    if (Math.abs(joystick.getRawAxis(1)) > Constants.ADVANCED_ARCADE_DRIVE_LINEAR_SPEED_DEAD_ZONE || Math.abs(joystick.getRawAxis(2)) > Constants.ADVANCED_ARCADE_DRIVE_ANGULAR_SPEED_DEAD_ZONE) {
+      westCoastDriveTrain.advancedArcadeDrive(joystick.getRawAxis(1), joystick.getRawAxis(2), false);
+    }
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    westCoastDrive.stopArcadeDrive();
+    westCoastDriveTrain.stopArcadeDrive();
   }
 
   // Returns true when the command should end.

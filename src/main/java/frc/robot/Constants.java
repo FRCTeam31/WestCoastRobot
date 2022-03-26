@@ -29,11 +29,11 @@ public final class Constants {
 
     // Drive Train Constants
     // Drive Train Hardware Constants
-    public static final int LEFT_DRIVE_MOTOR_1_CAN_ID = 0;
-    public static final int LEFT_DRIVE_MOTOR_2_CAN_ID = 1;
+    public static final int LEFT_DRIVE_MOTOR_1_CAN_ID = 15;
+    public static final int LEFT_DRIVE_MOTOR_2_CAN_ID = 33;
     public static final int LEFT_DRIVE_MOTOR_3_CAN_ID = 2;
-    public static final int RIGHT_DRIVE_MOTOR_1_CAN_ID = 3;
-    public static final int RIGHT_DRIVE_MOTOR_2_CAN_ID = 4;
+    public static final int RIGHT_DRIVE_MOTOR_1_CAN_ID = 11;
+    public static final int RIGHT_DRIVE_MOTOR_2_CAN_ID = 13;
     public static final int RIGHT_DRIVE_MOTOR_3_CAN_ID = 5;
     public static final double FIELD_ORIENTED_DRIVE_ANGLE_KP = 0;
     public static final double FIELD_ORIENTED_DRIVE_ANGLE_KI = 0;
@@ -41,9 +41,9 @@ public final class Constants {
     public static final double FIELD_ORIENTATED_DRIVE_ANGLE_DRIVE_ZONE = 5;
     public static final double DRIVE_TRAIN_WIDTH_METERS = 0.4;
     public static final double TURRET_DEGREES_TO_TICKS_CONSTANT = 3584; // Inverse of other number
-    public static final double DRIVE_TRAIN_FEED_FORWARD_KS = 0;
-    public static final double DRIVE_TRAIN_FEED_FORWARD_KV = 0;
-    public static final double DRIVE_TRAIN_FEED_FORWARD_KA = 0;
+    public static final double DRIVE_TRAIN_FEED_FORWARD_KS = 0.52272;
+    public static final double DRIVE_TRAIN_FEED_FORWARD_KV = 34.599;
+    public static final double DRIVE_TRAIN_FEED_FORWARD_KA = 0.72332;
     public static final double DRIVE_TRAIN_PID_KP = 0;
     public static final double DRIVE_TRAIN_PID_KI = 0;
     public static final double DRIVE_TRAIN_PID_KD = 0;
@@ -51,6 +51,7 @@ public final class Constants {
     public static final double DRIVE_TRAIN_FALCON_KI = 0;
     public static final double DRIVE_TRAIN_FALCON_KD = 0;
     public static final double DRIVE_TRAIN_FALCON_KF = 0;
+    public static final double DRIVE_TRAIN_MAX_WHEEL_SPEED_FALCON_UNITS = 0;
 
  
     // Track Ball with pixy command constants
@@ -67,6 +68,9 @@ public final class Constants {
 
     // Drive Train Command Constants
     public static final boolean SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS = true;
+    public static final double ADVANCED_ARCADE_DRIVE_ANGULAR_SPEED_DEAD_ZONE = 0.1;
+    public static final double ADVANCED_ARCADE_DRIVE_LINEAR_SPEED_DEAD_ZONE = 0.1;
+
 
     
 
@@ -92,16 +96,19 @@ public final class Constants {
     public static final int SET_SHOOTER_SPEED_Bottom_SHOOTER_MOTOR_AXIS = 0;
 
     // Unit Conversion Constants
-    public static final double FALCON_TICKS_TO_METERS = 2048.0 * 0.1; 
+    public static final double FALCON_VELOCITY_TO_METERS_PER_SECOND = 1.948e-4 / 12.75;
     public static final double TURRET_TICKS_TO_DEGREES_CONSTANT =  2.790178571e-4; //1 * (1 / 2048) * (1 / 45) * (1 / 14) * ( 360 / 1);
     // Convert from ticks to motor rotations (1 motor rotation per 2048 ticks) to turret rotations 
     // (1 turret rotation per 45 motor rotations) degrees (360 degrees per rotation)
    
     // Trajectory Constants
-    public static final double TRAJECTORY_MAX_SPEED = 0;
-    public static final double TRAJECTORY_MAX_ACCELERATION = 0;
+    public static final double TRAJECTORY_MAX_SPEED = 4;
+    public static final double TRAJECTORY_MAX_ACCELERATION = 2;
+
+    public static final double DRIVE_TRAIN_MAX_WHEEL_SPEED_METER_PER_SECOND = 0;
 
 
+ 
 
 
 

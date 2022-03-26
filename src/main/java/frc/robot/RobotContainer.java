@@ -225,7 +225,7 @@ public class RobotContainer {
     
     RamseteCommand ramseteCommand = new RamseteCommand(
       trajectory, 
-      westCoastDriveTrain :: getPose, 
+      westCoastDriveTrain::getPose, 
       new RamseteController(), 
       westCoastDriveTrain.getFeedForward(), 
       westCoastDriveTrain.getKinematics(), 

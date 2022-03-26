@@ -24,7 +24,7 @@ public class LimelightVisionSubsystem extends SubsystemBase {
   private int maxTicksWithNoTarget;
 
   /** Creates a new LimelightVisionSubsystem.
-   * @param maxTickWithNoTarget The maximum number of ticks that the 
+   * @param maxTicskWithNoTarget The maximum number of ticks that the 
    * limelight will continue to interpolate values if no target is found
    */
   public LimelightVisionSubsystem(int maxTicksWithNoTarget) {
@@ -71,6 +71,10 @@ public class LimelightVisionSubsystem extends SubsystemBase {
     return filteredX;
   }
 
+  /**
+   * Return the filtered Y value. If there is no current target, return the most recent Y value
+   * @return
+   */
   public double getFilteredY(){
     return filteredY;
   }

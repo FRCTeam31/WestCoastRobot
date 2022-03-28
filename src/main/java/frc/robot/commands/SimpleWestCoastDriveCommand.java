@@ -38,7 +38,7 @@ public class SimpleWestCoastDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    westCoastDrive.simpleArcadeDrive(joystick.getRawAxis(3), joystick.getRawAxis(1), squareInputs);
+    westCoastDrive.simpleArcadeDrive(joystick.getRawAxis(5), joystick.getRawAxis(4), squareInputs);
   }
 
   // Called once the command ends or is interrupted.

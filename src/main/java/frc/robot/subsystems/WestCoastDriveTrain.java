@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
@@ -14,6 +12,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -23,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-import static frc.robot.Constants.*;
 
 /**
  * A class to manage the drivetrain of the robot (West coast)
@@ -90,7 +88,8 @@ public class WestCoastDriveTrain extends SubsystemBase {
     this.navx = navx;
     this.navx.reset();
     kinematics = new DifferentialDriveKinematics(trackWidthMeters);
-    driveOdometry = new DifferentialDriveOdometry(getHeading());
+    // driveOdometry = new DifferentialDriveOdometry(getHeading());
+    driveOdometry = new DifferentialDriveOdometry(getHeading(), new Pose2d(7.834, 3.112, getHeading()));
     differentialDrive = new DifferentialDrive(this.leftMotors[0], this.rightMotors[0]);
   }
 

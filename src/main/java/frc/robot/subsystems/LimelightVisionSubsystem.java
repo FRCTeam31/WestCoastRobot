@@ -19,6 +19,7 @@ public class LimelightVisionSubsystem extends SubsystemBase {
   private LinearFilter yFilter;
   private Double filteredX;
   private Double filteredY;
+  private int filteredV;
   private Double prevX, prevY, prevX2, prevY2;
   private int ticksWithNoTarget;
   private int maxTicksWithNoTarget;
@@ -79,6 +80,14 @@ public class LimelightVisionSubsystem extends SubsystemBase {
     return filteredY;
   }
 
+  /**
+   * 
+   * @return The filtered V value: 1 = Valid target, 0 = NO valid target
+   */
+  public int getFilteredV(){
+    return filteredV;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -86,6 +95,7 @@ public class LimelightVisionSubsystem extends SubsystemBase {
       // There is a valid target
       filteredX = xFilter.calculate(getX());
       filteredY = yFilter.calculate(getY());
+      filteredV = 1;
       ticksWithNoTarget = 0;
     }
     else{
@@ -95,11 +105,13 @@ public class LimelightVisionSubsystem extends SubsystemBase {
         // Do not interpolate anymore
         // Behave so that the target is at the center of the camera, and the Y value does not change
         filteredX = xFilter.calculate(0);
+        filteredV = 0;
       }
       else{
         // Continue to interpolate
         filteredX = xFilter.calculate(prevX + (prevX - prevX2));
         filteredY = yFilter.calculate(prevY + (prevY - prevY2));
+        filteredV = 1;
       }
     }
     // Update values

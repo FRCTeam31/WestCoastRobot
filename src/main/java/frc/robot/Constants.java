@@ -26,6 +26,8 @@ public final class Constants {
     public static final int PIXY_MAX_TIME_WITH_NO_TARGET = 10;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY = 180; // Target distance measurement
     public static double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX = 150; // Target horizontal value
+    public static double ROBOT_INITIAL_POS_X = 7.834;
+    public static double ROBOT_INITIAL_POS_Y = 3.112;
 
     // Drive Train Constants
     // Drive Train Hardware Constants
@@ -51,7 +53,8 @@ public final class Constants {
     public static final double DRIVE_TRAIN_FALCON_KI = 0;
     public static final double DRIVE_TRAIN_FALCON_KD = 0;
     public static final double DRIVE_TRAIN_FALCON_KF = 0;
-    public static final double DRIVE_TRAIN_MAX_WHEEL_SPEED_FALCON_UNITS = 0;
+    public static final double DRIVE_TRAIN_MAX_WHEEL_SPEED_METER_PER_SECOND = 0;
+
 
  
     // Track Ball with pixy command constants
@@ -105,7 +108,9 @@ public final class Constants {
     public static final double TRAJECTORY_MAX_SPEED = 4;
     public static final double TRAJECTORY_MAX_ACCELERATION = 2;
 
-    public static final double DRIVE_TRAIN_MAX_WHEEL_SPEED_METER_PER_SECOND = 0;
+    	// Field Cordinates Constants
+        public static double FIELD_CENTER_X_CORD = 8.2296;
+        public static double FIELD_CENTER_Y_CORD = 4.1148;
 
 
  

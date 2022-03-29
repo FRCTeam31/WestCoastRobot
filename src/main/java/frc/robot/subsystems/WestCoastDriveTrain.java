@@ -12,7 +12,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -89,7 +88,7 @@ public class WestCoastDriveTrain extends SubsystemBase {
     this.navx.reset();
     kinematics = new DifferentialDriveKinematics(trackWidthMeters);
     // driveOdometry = new DifferentialDriveOdometry(getHeading());
-    driveOdometry = new DifferentialDriveOdometry(getHeading(), new Pose2d(7.834, 3.112, getHeading()));
+    driveOdometry = new DifferentialDriveOdometry(getHeading(), new Pose2d(Constants.ROBOT_INITIAL_POS_X, Constants.ROBOT_INITIAL_POS_Y, getHeading()));
     differentialDrive = new DifferentialDrive(this.leftMotors[0], this.rightMotors[0]);
   }
 

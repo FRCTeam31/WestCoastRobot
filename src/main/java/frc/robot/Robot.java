@@ -25,8 +25,10 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  Trajectory trajectory = new Trajectory();
-  String trajectoryPathJson = "Paths/StartToFirstBall.wpilib.json";
+  Trajectory firstTrajectory= new Trajectory();
+  Trajectory secondTrajectory = new Trajectory();
+  String firstTrajectoryJson = "Paths/StartToFirstBall.wpilib.json";
+  String secondTrajectoryJson = "Paths/FirstBallToSecondBall.wpilib.json";
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -34,17 +36,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryPathJson);
+    Path firstTrajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(firstTrajectoryJson);
+    Path secondTrajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(secondTrajectoryJson);
     try {
-      trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+      firstTrajectory = TrajectoryUtil.fromPathweaverJson(firstTrajectoryPath);
+      secondTrajectory = TrajectoryUtil.fromPathweaverJson(secondTrajectoryPath);
+      System.out.println("Paths Loaded Successfully!!!!!!!!!!!!!!!");
     } catch (IOException e) {
       // TODO Auto-generated catch block
+      System.out.println("SOMETHING WENT WRONG LOADING THE PATHS!!!!!!!! :((((((");
       e.printStackTrace();
     }
-    System.out.println("1000");
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    m_robotContainer = new RobotContainer(firstTrajectory, secondTrajectory);
   }
 
   /**

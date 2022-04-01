@@ -21,6 +21,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -60,6 +61,7 @@ public class RobotContainer {
   private Joystick joystick0;
   private JoystickButton joystick0Button1;
   private JoystickButton joystick0Button2;
+  private JoystickButton joystcik0Button5;
 
   // Sensors
   //NavX
@@ -90,12 +92,16 @@ public class RobotContainer {
   private ShooterSubsystem shooterSubsystem;
   private SetShooterSpeedCommand setShooterSpeedCommand;
 
+  // Automation Trajectories
+  private Trajectory firstTrajectory;
+  private Trajectory secondTrajectory;
+
   // Automation Commands
   private TrackTargetWithTurretCommand trackTargetWithTurretCommand;
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer(Trajectory firstTrajectory, Trajectory secondTrajectory) {
     // Alighnment Constants
     // try {
     //   alignmentConstants = new Properties();
@@ -110,6 +116,7 @@ public class RobotContainer {
     joystick0 = new Joystick(JOYSTICK_0_PORT_NUMBER);
     joystick0Button1 = new JoystickButton(joystick0, 1);
     joystick0Button2 = new JoystickButton(joystick0, 2);
+    joystcik0Button5 = new JoystickButton(joystick0, 5);
 
     // // Sensors
     // // NavX
@@ -153,7 +160,7 @@ public class RobotContainer {
     // Drive Train Commands
     simpleWestCoastDriveCommand = new SimpleWestCoastDriveCommand(westCoastDriveTrain, joystick0, SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS);
     westCoastDriveTrain.setDefaultCommand(simpleWestCoastDriveCommand);
-    // fieldOrientatedWestCoastDriveCommand = new FieldOrientatedWestCoastDriveCommand(westCoastDriveTrain, joystick0);
+    // // fieldOrientatedWestCoastDriveCommand = new FieldOrientatedWestCoastDriveCommand(westCoastDriveTrain, joystick0);
 
 
     // // Intake Subsystem
@@ -191,7 +198,11 @@ public class RobotContainer {
     // shooterSubsystem = new ShooterSubsystem(topShooterMotor, bottomShooterMotor);
     // setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_Bottom_SHOOTER_MOTOR_AXIS, joystick0, shooterSubsystem);
 
-    // // Automation Commands
+    // Automation Trajectories
+    this.firstTrajectory = firstTrajectory;
+    this.secondTrajectory = secondTrajectory;
+
+    // Automation Commands
     // trackTargetWithTurretCommand = new TrackTargetWithTurretCommand(turretSubsystem, limelightVisionSubsystem);
 
     // Configure the button bindings
@@ -207,6 +218,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // joystick0Button1.toggleWhenPressed(fieldOrientatedWestCoastDriveCommand, true);
     // joystick0Button2.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    // joystcik0Button5.toggleWhenPressed(trackTargetWithTurretCommand, true);
   }
 
   /**
@@ -216,16 +228,12 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    TrajectoryConfig config = new TrajectoryConfig(Constants.TRAJECTORY_MAX_SPEED, Constants.TRAJECTORY_MAX_ACCELERATION);
-    config.setKinematics(westCoastDriveTrain.getKinematics());
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-      new Pose2d(), 
-      List.of(new Translation2d(1, 1)), 
-      new Pose2d(), 
-      config);
+    // TrajectoryConfig config = new TrajectoryConfig(Constants.TRAJECTORY_MAX_SPEED, Constants.TRAJECTORY_MAX_ACCELERATION);
+    // config.setKinematics(westCoastDriveTrain.getKinematics());
+
     
-    RamseteCommand ramseteCommand = new RamseteCommand(
-      trajectory, 
+    RamseteCommand firstRamseteCommand = new RamseteCommand(
+      firstTrajectory, 
       westCoastDriveTrain::getPose, 
       new RamseteController(), 
       westCoastDriveTrain.getFeedForward(), 
@@ -235,8 +243,19 @@ public class RobotContainer {
       westCoastDriveTrain.getRightPIDController(), 
       westCoastDriveTrain::driveWithVoltage, 
       westCoastDriveTrain);
+    
+    RamseteCommand secondCommand = new RamseteCommand(
+      secondTrajectory, westCoastDriveTrain::getPose, 
+      new RamseteController(), 
+      westCoastDriveTrain.getFeedForward(), 
+      westCoastDriveTrain.getKinematics(), 
+      westCoastDriveTrain::getWheelSpeeds, 
+      westCoastDriveTrain.getLeftPIDController(), 
+      westCoastDriveTrain.getRightPIDController(), 
+      westCoastDriveTrain::driveWithVoltage,
+      westCoastDriveTrain);
 
-    return ramseteCommand.andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0));
+    // return ramseteCommand.andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0));
   }
 }
   

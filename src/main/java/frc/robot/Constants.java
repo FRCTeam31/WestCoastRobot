@@ -55,10 +55,14 @@ public final class Constants {
     public static final double DRIVE_TRAIN_FALCON_KF = 0;
     public static final double DRIVE_TRAIN_MAX_WHEEL_SPEED_METER_PER_SECOND = 0;
 
+    // Drive Train Control Constants
+    public static final double SAFE_DRIVE_RATE = 0.3;
+    public static final double SAFE_INTAKE_POWER = 0.4;
+    public static double SAFE_TURN_RATE = 0.1;
+
 
  
     // Track Ball with pixy command constants
-    public static double SAFE_TURN_RATE = 0.1;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 0;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI = 0;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD = 0;
@@ -83,15 +87,15 @@ public final class Constants {
     // Turret Subsystem
     public static final int TURRET_MOTOR_CAN_ID = 7;
     public static final double TURRET_MAX_ANGLE = 100;
-    public static final double TURRET_MOTOR_KP = 0;
+    public static final double TURRET_MOTOR_KP = 0.2;
     public static final double TURRET_MOTOR_KI = 0;
     public static final double TURRET_MOTOR_KD = 0;
     public static final double TURRET_MOTOR_KF = 0;
-    public static final int TELEOP_CONTROL_TURRET_JOYSTICK_AXIS = 6;
+    public static final int TELEOP_CONTROL_TURRET_JOYSTICK_AXIS = 0;
     // Shooter Subsystem
     public static final int TOP_SHOOTER_MOTOR_CAN_ID = 8;
     public static final int BOTTOM_SHOOTER_MOTOR_CAN_ID = 9;
-    public static final double SHOOTER_MOTOR_KP = 0;
+    public static final double SHOOTER_MOTOR_KP = 0.02;
     public static final double SHOOTER_MOTOR_KI = 0;
     public static final double SHOOTER_MOTOR_KD = 0;
     public static final double SHOOTER_MOTOR_KF = 0;
@@ -108,11 +112,15 @@ public final class Constants {
     public static final double TRAJECTORY_MAX_SPEED = 4;
     public static final double TRAJECTORY_MAX_ACCELERATION = 2;
 
-    	// Field Cordinates Constants
-        public static double FIELD_CENTER_X_CORD = 8.2296;
-        public static double FIELD_CENTER_Y_CORD = 4.1148;
 
 
+    // Field Cordinates Constants
+    public static double FIELD_CENTER_X_CORD = 8.2296;
+    public static double FIELD_CENTER_Y_CORD = 4.1148;
+    public static double FIRST_BALL_X_CORD = 5.136;
+    public static double FIRST_BALL_Y_CORD = 1.848;
+    public static double SECOND_BALL_X_CORD = 1.094;
+    public static double SECOND_BALL_Y_CORD = 1.131;
  
 
 

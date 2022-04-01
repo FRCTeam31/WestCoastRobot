@@ -12,7 +12,7 @@ import frc.robot.subsystems.LimelightVisionSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.WestCoastDriveTrain;
 
-public class TrackBallWithOdometryCommand extends CommandBase {
+public class TrackTargetWithOdometryCommand extends CommandBase {
   // Instance Variables
   private TurretSubsystem turret;
   private LimelightVisionSubsystem limelight;
@@ -32,7 +32,7 @@ public class TrackBallWithOdometryCommand extends CommandBase {
    * When the difference between the odometry-calculated angle and the curret turret
    * angle is less than this number, full controll will be given to the limelight
   */
-  public TrackBallWithOdometryCommand(TurretSubsystem turret, LimelightVisionSubsystem limelight, 
+  public TrackTargetWithOdometryCommand(TurretSubsystem turret, LimelightVisionSubsystem limelight, 
     WestCoastDriveTrain driveTrain, double limeLighZone) {
     
     this.turret = turret;
@@ -68,9 +68,9 @@ public class TrackBallWithOdometryCommand extends CommandBase {
     }
     else{
       // There is a valid target
-       // Calculate, then convert to degrees
+      // Calculate, then convert to degrees
       // Calculate current target angle from the robots angle, the turret's angle, and the target's angle in the limelight's field of view
-      double currentTargetAngle = new Rotation2d(Math.toRadians(driveTrain.getHeading().getDegrees() + turret.getCurrentAngle() + limelight.getFilteredV())).getDegrees();
+      double currentTargetAngle = new Rotation2d(Math.toRadians(driveTrain.getHeading().getDegrees() + turret.getCurrentAngle() + limelight.getFilteredX())).getDegrees();
       // Calculate angle difference
       double angleDifference = absoluteAngleToTarget - currentTargetAngle;
       

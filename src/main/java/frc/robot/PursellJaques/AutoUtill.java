@@ -12,12 +12,21 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.AutoPowerIntake;
+import frc.robot.commands.AutoSetShooterSpeed;
+import frc.robot.commands.TrackTargetWithOdometryCommand;
+import frc.robot.commands.TrackTargetWithRobotUsingOdometryCommand;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightVisionSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.WestCoastDriveTrain;
 
 /** Add your docs here.
@@ -68,6 +77,37 @@ public class AutoUtill {
         return new ParallelCommandGroup(
             ramseteCommand,
             new AutoPowerIntake(intake, intakeTime)
+        );
+    }
+
+    /**
+     * Get a parallel command groupo that turns the robot to face the target, 
+     * turns the turret to face the target, and then powers the intake and 
+     * power the shooter motors for a set time
+     * @param driveTrain The drive train the command will use
+     * @param turret The turret the command will use
+     * @param shooter The shooter the command will use
+     * @param intake The intake that the command will use
+     * @param limelight The limelight that the command will use
+     * @param maxTime The maximum time that the that the command should run in seconds
+     * @param intakeWaittime The time that the intake should wait to be powered in seconds
+     * @param intakePowerTime The time that the intake should be powered after waiting in seconds
+     * @return
+     */
+    public static Command getAutoShootCommand(WestCoastDriveTrain driveTrain, TurretSubsystem turret, ShooterSubsystem shooter, IntakeSubsystem intake, LimelightVisionSubsystem limelight, double maxTime, double intakeWaittime, double intakePowerTime){
+        TrackTargetWithOdometryCommand trackTargetWithOdometryCommand = new TrackTargetWithOdometryCommand(turret, limelight, driveTrain, Constants.TRACK_TARGET_WITH_ODOMETRY_LIMELIGHT_ZONE);
+        TrackTargetWithRobotUsingOdometryCommand trackTargetWithRobotUsingOdometryCommand = new TrackTargetWithRobotUsingOdometryCommand(driveTrain, maxTime);
+        AutoSetShooterSpeed autoSetShooterSpeed = new AutoSetShooterSpeed(shooter, limelight, Constants.AUTO_SHOOTER_SPEED_RANGES, Constants.AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS, Constants.AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS);
+
+        return new ParallelRaceGroup(
+            trackTargetWithRobotUsingOdometryCommand,
+            trackTargetWithOdometryCommand,
+            autoSetShooterSpeed,
+            new SequentialCommandGroup(
+                new WaitCommand(intakeWaittime),
+                new AutoPowerIntake(intake, intakePowerTime)
+            )
+
         );
     }
 }

@@ -25,11 +25,15 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.PursellJaques.AutoUtill;
+import frc.robot.commands.AdvancedWestCoastDriveCommand;
 import frc.robot.commands.FieldOrientatedWestCoastDriveCommand;
 import frc.robot.commands.SetShooterSpeedCommand;
 import frc.robot.commands.SimpleWestCoastDriveCommand;
 import frc.robot.commands.TeleopControlIntakeCommand;
 import frc.robot.commands.TeleopControlTurretCommand;
+import frc.robot.commands.TrackTargetWithOdometryCommand;
+import frc.robot.commands.TrackTargetWithRobotUsingOdometryCommand;
 import frc.robot.commands.TrackTargetWithTurretCommand;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightVisionSubsystem;
@@ -61,7 +65,17 @@ public class RobotContainer {
   private Joystick joystick0;
   private JoystickButton joystick0Button1;
   private JoystickButton joystick0Button2;
+  private JoystickButton joystick0Button3;
+  private JoystickButton joystick0Button4;
   private JoystickButton joystcik0Button5;
+  private JoystickButton joystick0Button6;
+  private JoystickButton joystick0Button7;
+  private JoystickButton joystick0Button8;
+  private JoystickButton joystick0Button9;
+
+  private Joystick js1;
+
+
 
   // Sensors
   //NavX
@@ -79,6 +93,7 @@ public class RobotContainer {
   // Drive Train Commands
   private SimpleWestCoastDriveCommand simpleWestCoastDriveCommand;
   private FieldOrientatedWestCoastDriveCommand fieldOrientatedWestCoastDriveCommand;
+  private AdvancedWestCoastDriveCommand advancedArcadeDriveCommand;
 
   // Intake Subsystem
   private IntakeSubsystem intakeSubsystem;
@@ -98,6 +113,8 @@ public class RobotContainer {
 
   // Automation Commands
   private TrackTargetWithTurretCommand trackTargetWithTurretCommand;
+  private TrackTargetWithOdometryCommand trackTargetWithOdometryCommand;
+  private TrackTargetWithRobotUsingOdometryCommand trackTargetWithRobotUsingOdometryCommand;
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -116,16 +133,24 @@ public class RobotContainer {
     joystick0 = new Joystick(JOYSTICK_0_PORT_NUMBER);
     joystick0Button1 = new JoystickButton(joystick0, 1);
     joystick0Button2 = new JoystickButton(joystick0, 2);
+    joystick0Button3 = new JoystickButton(joystick0, 3);
+    joystick0Button4 = new JoystickButton(joystick0, 4);
     joystcik0Button5 = new JoystickButton(joystick0, 5);
+    joystick0Button6 = new JoystickButton(joystick0, 6);
+    joystick0Button7 = new JoystickButton(joystick0, 7);
+    joystick0Button8 = new JoystickButton(joystick0, 8);
+    joystick0Button9 = new JoystickButton(joystick0, 9);
+
+    js1 = new Joystick(1);
 
     // // Sensors
     // // NavX
     // // NAVX NEEDS TO BE REBOARDED FOR HORIZONTAL ALIGHNMENT!! LOOK UP NAVX OMNIMOUNT!!!!
     navx = new AHRS();
-    // // Limelight Subsystem
-    // limelightVisionSubsystem = new LimelightVisionSubsystem(Constants.LIMELIGHT_MAX_TIME_WITH_NO_TARGET);
-    // // Pixy Subsystem
-    // pixyVisionSubsystem = new PixyVisionSubsystem(Constants.PIXY_MAX_TIME_WITH_NO_TARGET, Constants.CURRENT_BALL_SIGNATURE);
+    // Limelight Subsystem
+    limelightVisionSubsystem = new LimelightVisionSubsystem(Constants.LIMELIGHT_MAX_TIME_WITH_NO_TARGET);
+    // Pixy Subsystem
+    pixyVisionSubsystem = new PixyVisionSubsystem(Constants.PIXY_MAX_TIME_WITH_NO_TARGET, Constants.CURRENT_BALL_SIGNATURE);
 
     // Drive Train
     // Drive Train Hardware
@@ -159,28 +184,29 @@ public class RobotContainer {
       Constants.DRIVE_TRAIN_WIDTH_METERS);
     // Drive Train Commands
     simpleWestCoastDriveCommand = new SimpleWestCoastDriveCommand(westCoastDriveTrain, joystick0, SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS);
-    westCoastDriveTrain.setDefaultCommand(simpleWestCoastDriveCommand);
-    // // fieldOrientatedWestCoastDriveCommand = new FieldOrientatedWestCoastDriveCommand(westCoastDriveTrain, joystick0);
+    // westCoastDriveTrain.setDefaultCommand(simpleWestCoastDriveCommand);
+    // fieldOrientatedWestCoastDriveCommand = new FieldOrientatedWestCoastDriveCommand(westCoastDriveTrain, joystick0);
+    advancedArcadeDriveCommand = new AdvancedWestCoastDriveCommand(westCoastDriveTrain, joystick0, SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS);
+    westCoastDriveTrain.setDefaultCommand(advancedArcadeDriveCommand);
 
+    // Intake Subsystem
+    WPI_TalonSRX intakeMotor = new WPI_TalonSRX(INTAKE_MOTOR_CAN_ID);
+    intakeSubsystem = new IntakeSubsystem(intakeMotor);
+    teleopControlIntakeCommand = new TeleopControlIntakeCommand(intakeSubsystem, joystick0, Constants.TELEOP_BALL_INTAKE_JOYSTICK_AXIS);
+    intakeSubsystem.setDefaultCommand(teleopControlIntakeCommand);
 
-    // // Intake Subsystem
-    // WPI_TalonSRX intakeMotor = new WPI_TalonSRX(INTAKE_MOTOR_CAN_ID);
-    // intakeSubsystem = new IntakeSubsystem(intakeMotor);
-    // teleopControlIntakeCommand = new TeleopControlIntakeCommand(intakeSubsystem, joystick0, Constants.TELEOP_BALL_INTAKE_JOYSTICK_AXIS);
-    // intakeSubsystem.setDefaultCommand(teleopControlIntakeCommand);
-
-    // // Turret Subsystem
-    // WPI_TalonFX turretMotor = new WPI_TalonFX(TURRET_MOTOR_CAN_ID);
-    // TalonFXConfiguration turretMotorConfig = new TalonFXConfiguration();
-    // turretMotorConfig.slot0.kP = TURRET_MOTOR_KP;
-    // turretMotorConfig.slot0.kI = TURRET_MOTOR_KI;
-    // turretMotorConfig.slot0.kD = TURRET_MOTOR_KD;
-    // turretMotorConfig.slot0.kF = TURRET_MOTOR_KF;
-    // turretMotor.configAllSettings(turretMotorConfig);
-    // turretMotor.selectProfileSlot(0, 0);
-    // turretSubsystem = new TurretSubsystem(turretMotor);
-    // turretSubsystem.setMaxTurretAngle(TURRET_MAX_ANGLE);
-    // teleopControlTurretCommand = new TeleopControlTurretCommand(turretSubsystem, joystick0, Constants.TELEOP_CONTROL_TURRET_JOYSTICK_AXIS);
+    // Turret Subsystem
+    WPI_TalonFX turretMotor = new WPI_TalonFX(TURRET_MOTOR_CAN_ID);
+    TalonFXConfiguration turretMotorConfig = new TalonFXConfiguration();
+    turretMotorConfig.slot0.kP = TURRET_MOTOR_KP;
+    turretMotorConfig.slot0.kI = TURRET_MOTOR_KI;
+    turretMotorConfig.slot0.kD = TURRET_MOTOR_KD;
+    turretMotorConfig.slot0.kF = TURRET_MOTOR_KF;
+    turretMotor.configAllSettings(turretMotorConfig);
+    turretMotor.selectProfileSlot(0, 0);
+    turretSubsystem = new TurretSubsystem(turretMotor);
+    turretSubsystem.setMaxTurretAngle(TURRET_MAX_ANGLE);
+    teleopControlTurretCommand = new TeleopControlTurretCommand(turretSubsystem, joystick0, Constants.TELEOP_CONTROL_TURRET_JOYSTICK_AXIS);
     // turretSubsystem.setDefaultCommand(teleopControlTurretCommand);
 
     // // Shooter Subsystem
@@ -196,14 +222,18 @@ public class RobotContainer {
     // topShooterMotor.selectProfileSlot(0, 0);
     // bottomShooterMotor.selectProfileSlot(0, 0);
     // shooterSubsystem = new ShooterSubsystem(topShooterMotor, bottomShooterMotor);
-    // setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_Bottom_SHOOTER_MOTOR_AXIS, joystick0, shooterSubsystem);
+    // setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, js1, shooterSubsystem);
+    // shooterSubsystem.setDefaultCommand(setShooterSpeedCommand);
 
     // Automation Trajectories
     this.firstTrajectory = firstTrajectory;
     this.secondTrajectory = secondTrajectory;
 
     // Automation Commands
-    // trackTargetWithTurretCommand = new TrackTargetWithTurretCommand(turretSubsystem, limelightVisionSubsystem);
+    trackTargetWithTurretCommand = new TrackTargetWithTurretCommand(turretSubsystem, limelightVisionSubsystem);
+    trackTargetWithOdometryCommand = new TrackTargetWithOdometryCommand(turretSubsystem, limelightVisionSubsystem, westCoastDriveTrain, Constants.TRACK_TARGET_WITH_ODOMETRY_LIMELIGHT_ZONE);
+    trackTargetWithRobotUsingOdometryCommand = new TrackTargetWithRobotUsingOdometryCommand(westCoastDriveTrain, 10);
+    turretSubsystem.setDefaultCommand(trackTargetWithOdometryCommand);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -219,6 +249,10 @@ public class RobotContainer {
     // joystick0Button1.toggleWhenPressed(fieldOrientatedWestCoastDriveCommand, true);
     // joystick0Button2.toggleWhenPressed(trackTargetWithTurretCommand, true);
     // joystcik0Button5.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    joystick0Button1.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    joystick0Button2.toggleWhenPressed(trackTargetWithRobotUsingOdometryCommand, true);
+    joystick0Button3.toggleWhenPressed(AutoUtill.getAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 2, 2), true);
+    joystick0Button6.toggleWhenPressed(teleopControlTurretCommand, true);
   }
 
   /**
@@ -255,7 +289,7 @@ public class RobotContainer {
       westCoastDriveTrain::driveWithVoltage,
       westCoastDriveTrain);
 
-    // return ramseteCommand.andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0));
+    return secondCommand.andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0));
   }
 }
   

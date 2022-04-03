@@ -97,8 +97,8 @@ public class WestCoastDriveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // Update the robot's current position
-    double leftSensor = leftMotors[0].getSelectedSensorPosition() * Constants.FALCON_VELOCITY_TO_METERS_PER_SECOND;
-    double rightSensor = rightMotors[0].getSelectedSensorPosition() * Constants.FALCON_VELOCITY_TO_METERS_PER_SECOND;
+    double leftSensor = leftMotors[0].getSelectedSensorPosition() * Constants.FALCON_TICKS_TO_METERS;
+    double rightSensor = rightMotors[0].getSelectedSensorPosition() * Constants.FALCON_TICKS_TO_METERS;
     driveOdometry.update(getHeading(), leftSensor, rightSensor);
 
     Pose2d currentPos = getPose();

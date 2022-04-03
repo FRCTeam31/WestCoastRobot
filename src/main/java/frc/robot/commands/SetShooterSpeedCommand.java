@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.PursellJaques.ShooterSpeeds;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -34,7 +35,7 @@ public class SetShooterSpeedCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(joystick.getRawAxis(topMotorAxis),  joystick.getRawAxis(bottomMotorAxis)));
+    shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(joystick.getRawAxis(topMotorAxis) * Constants.MAX_SHOOTER_SPEED,  joystick.getRawAxis(bottomMotorAxis) * Constants.MAX_SHOOTER_SPEED));
   }
 
   // Called once the command ends or is interrupted.

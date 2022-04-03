@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.util.Properties;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,6 +32,7 @@ public class TurretSubsystem extends SubsystemBase {
   */
   public TurretSubsystem(WPI_TalonFX turretMotor, Properties alignmentConstants) {
     this.turretMotor = turretMotor;
+    this.turretMotor.setNeutralMode(NeutralMode.Brake);
     this.loadAngleAlignmentConstant(alignmentConstants);
     maxTurretAngle = null;
     targetAngle = this.getCurrentAngle();

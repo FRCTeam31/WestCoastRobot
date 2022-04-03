@@ -25,6 +25,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public ShooterSubsystem(WPI_TalonFX topMotor, WPI_TalonFX bottomMotor) {
     this.topMotor = topMotor;
     this.bottomMotor = bottomMotor;
+    this.targetShooterSpeeds = new ShooterSpeeds(0, 0);
   }
 
   /**
@@ -43,7 +44,7 @@ public class ShooterSubsystem extends SubsystemBase {
    */
   public void simpleSetShooterSpeeds(ShooterSpeeds shooterSpeeds) {
     topMotor.set(ControlMode.Velocity, shooterSpeeds.topMotorSpeed);
-    bottomMotor.set(ControlMode.Velocity, shooterSpeeds.bottomMotorSpeed);
+    bottomMotor.set(ControlMode.Velocity, -shooterSpeeds.bottomMotorSpeed);
     targetShooterSpeeds = shooterSpeeds;
   }
   

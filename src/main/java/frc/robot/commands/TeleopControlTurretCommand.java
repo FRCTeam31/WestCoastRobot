@@ -36,7 +36,12 @@ public class TeleopControlTurretCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turret.setTurretRelativeAngle(joystick.getRawAxis(axis) * 40);
+    if(Math.abs(joystick.getRawAxis(axis)) > 0.1){
+      turret.setTurretRelativeAngle(joystick.getRawAxis(axis) * 40);
+    }
+    else{
+      turret.stopMotion();
+    }
   }
 
   // Called once the command ends or is interrupted.

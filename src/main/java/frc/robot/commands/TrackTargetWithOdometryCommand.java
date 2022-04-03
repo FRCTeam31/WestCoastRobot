@@ -4,7 +4,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Rotation2d;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.PursellJaques.TargetTrackingType;
@@ -24,7 +24,7 @@ public class TrackTargetWithOdometryCommand extends CommandBase {
    * angle is less than this number, full controll will be given to the limelight
   */
 
-  /** Creates a new TrackBallWithOdometryCommand. 
+  /** Creates a new TrackTargetWithOdometry. 
    * @param turret The turret subsystem that the command will control
    * @param limelight The limelight that the command will use to track the target
    * @param driveTrain The drive train the command will use to get odometry data (will not actually drive it)
@@ -70,13 +70,13 @@ public class TrackTargetWithOdometryCommand extends CommandBase {
       // There is a valid target
       // Calculate, then convert to degrees
       // Calculate current target angle from the robots angle, the turret's angle, and the target's angle in the limelight's field of view
-      double currentTargetAngle = new Rotation2d(Math.toRadians(driveTrain.getHeading().getDegrees() + turret.getCurrentAngle() + limelight.getFilteredX())).getDegrees();
+      double currentDirection = -driveTrain.getHeading().getDegrees() + turret.getCurrentAngle() + limelight.getFilteredX();
       // Calculate angle difference
-      double angleDifference = absoluteAngleToTarget - currentTargetAngle;
+      double angleDifference = absoluteAngleToTarget - currentDirection;
       
       if(Math.abs(angleDifference) > limelightZone){
         // Limelight sees target, but the combined angle from the turret's turn and the targets position in the 
-        // turrets field of vision are otoo far outside the expected limelight zone
+        // turrets field of vision are too far outside the expected limelight zone
         trackingType = TargetTrackingType.Odometry;
       }
       else{
@@ -88,7 +88,7 @@ public class TrackTargetWithOdometryCommand extends CommandBase {
     // Power the turret based on the tracking type
     if(trackingType == TargetTrackingType.Odometry){
       // Track using Odometry
-      turret.setTurretAbsoluteAngle(absoluteAngleToTarget - driveTrain.getHeading().getDegrees());
+      turret.setTurretAbsoluteAngle(absoluteAngleToTarget + driveTrain.getHeading().getDegrees());
       // Set the relative angle to the absolute angle - the robot's current angle
     }
     else if(trackingType == TargetTrackingType.Limelight){

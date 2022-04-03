@@ -29,6 +29,7 @@ import frc.robot.PursellJaques.AutoUtill;
 import frc.robot.commands.AdvancedWestCoastDriveCommand;
 import frc.robot.commands.FieldOrientatedWestCoastDriveCommand;
 import frc.robot.commands.SetShooterSpeedCommand;
+import frc.robot.commands.SimpleAutoDriveAndIntakeCommand;
 import frc.robot.commands.SimpleWestCoastDriveCommand;
 import frc.robot.commands.TeleopControlIntakeCommand;
 import frc.robot.commands.TeleopControlTurretCommand;
@@ -74,6 +75,17 @@ public class RobotContainer {
   private JoystickButton joystick0Button9;
 
   private Joystick js1;
+  private JoystickButton js1Btn1;
+  private JoystickButton js1Btn2;
+  private JoystickButton js1Btn3;
+  private JoystickButton js1Btn4;
+  private JoystickButton js1Btn5;
+  private JoystickButton js1Btn6;
+  private JoystickButton js1Btn7;
+  private JoystickButton js1Btn8;
+  private JoystickButton js1Btn9;
+  private JoystickButton js1Btn10;
+
 
 
 
@@ -116,6 +128,9 @@ public class RobotContainer {
   private TrackTargetWithOdometryCommand trackTargetWithOdometryCommand;
   private TrackTargetWithRobotUsingOdometryCommand trackTargetWithRobotUsingOdometryCommand;
 
+  // Testing Commands
+  private SimpleAutoDriveAndIntakeCommand simpleAutoDriveAndIntakeCommand;
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer(Trajectory firstTrajectory, Trajectory secondTrajectory) {
@@ -142,6 +157,17 @@ public class RobotContainer {
     joystick0Button9 = new JoystickButton(joystick0, 9);
 
     js1 = new Joystick(1);
+    js1Btn1 = new JoystickButton(js1, 1);
+    js1Btn2 = new JoystickButton(js1, 2);
+    js1Btn3 = new JoystickButton(js1, 3);
+    js1Btn4 = new JoystickButton(js1, 4);
+    js1Btn5 = new JoystickButton(js1, 5);
+    js1Btn6 = new JoystickButton(js1, 6);
+    js1Btn7 = new JoystickButton(js1, 7);
+    js1Btn8 = new JoystickButton(js1, 8);
+    js1Btn9 = new JoystickButton(js1, 9);
+    js1Btn10 = new JoystickButton(js1, 10);
+
 
     // // Sensors
     // // NavX
@@ -185,7 +211,7 @@ public class RobotContainer {
     // Drive Train Commands
     simpleWestCoastDriveCommand = new SimpleWestCoastDriveCommand(westCoastDriveTrain, joystick0, SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS);
     // westCoastDriveTrain.setDefaultCommand(simpleWestCoastDriveCommand);
-    // fieldOrientatedWestCoastDriveCommand = new FieldOrientatedWestCoastDriveCommand(westCoastDriveTrain, joystick0);
+    fieldOrientatedWestCoastDriveCommand = new FieldOrientatedWestCoastDriveCommand(westCoastDriveTrain, joystick0);
     advancedArcadeDriveCommand = new AdvancedWestCoastDriveCommand(westCoastDriveTrain, joystick0, SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS);
     westCoastDriveTrain.setDefaultCommand(advancedArcadeDriveCommand);
 
@@ -207,23 +233,23 @@ public class RobotContainer {
     turretSubsystem = new TurretSubsystem(turretMotor);
     turretSubsystem.setMaxTurretAngle(TURRET_MAX_ANGLE);
     teleopControlTurretCommand = new TeleopControlTurretCommand(turretSubsystem, joystick0, Constants.TELEOP_CONTROL_TURRET_JOYSTICK_AXIS);
-    // turretSubsystem.setDefaultCommand(teleopControlTurretCommand);
+    turretSubsystem.setDefaultCommand(teleopControlTurretCommand);
 
-    // // Shooter Subsystem
-    // WPI_TalonFX topShooterMotor = new WPI_TalonFX(TOP_SHOOTER_MOTOR_CAN_ID);
-    // WPI_TalonFX bottomShooterMotor = new WPI_TalonFX(BOTTOM_SHOOTER_MOTOR_CAN_ID);
-    // TalonFXConfiguration shooterMotorConfig = new TalonFXConfiguration();
-    // shooterMotorConfig.slot0.kP = SHOOTER_MOTOR_KP;
-    // shooterMotorConfig.slot0.kI = SHOOTER_MOTOR_KI;
-    // shooterMotorConfig.slot0.kD = SHOOTER_MOTOR_KD;
-    // shooterMotorConfig.slot0.kF = SHOOTER_MOTOR_KF;
-    // topShooterMotor.configAllSettings(shooterMotorConfig);
-    // bottomShooterMotor.configAllSettings(shooterMotorConfig);
-    // topShooterMotor.selectProfileSlot(0, 0);
-    // bottomShooterMotor.selectProfileSlot(0, 0);
-    // shooterSubsystem = new ShooterSubsystem(topShooterMotor, bottomShooterMotor);
-    // setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, js1, shooterSubsystem);
-    // shooterSubsystem.setDefaultCommand(setShooterSpeedCommand);
+    // Shooter Subsystem
+    WPI_TalonFX topShooterMotor = new WPI_TalonFX(TOP_SHOOTER_MOTOR_CAN_ID);
+    WPI_TalonFX bottomShooterMotor = new WPI_TalonFX(BOTTOM_SHOOTER_MOTOR_CAN_ID);
+    TalonFXConfiguration shooterMotorConfig = new TalonFXConfiguration();
+    shooterMotorConfig.slot0.kP = SHOOTER_MOTOR_KP;
+    shooterMotorConfig.slot0.kI = SHOOTER_MOTOR_KI;
+    shooterMotorConfig.slot0.kD = SHOOTER_MOTOR_KD;
+    shooterMotorConfig.slot0.kF = SHOOTER_MOTOR_KF;
+    topShooterMotor.configAllSettings(shooterMotorConfig);
+    bottomShooterMotor.configAllSettings(shooterMotorConfig);
+    topShooterMotor.selectProfileSlot(0, 0);
+    bottomShooterMotor.selectProfileSlot(0, 0);
+    shooterSubsystem = new ShooterSubsystem(topShooterMotor, bottomShooterMotor);
+    setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, js1, shooterSubsystem);
+    shooterSubsystem.setDefaultCommand(setShooterSpeedCommand);
 
     // Automation Trajectories
     this.firstTrajectory = firstTrajectory;
@@ -233,7 +259,9 @@ public class RobotContainer {
     trackTargetWithTurretCommand = new TrackTargetWithTurretCommand(turretSubsystem, limelightVisionSubsystem);
     trackTargetWithOdometryCommand = new TrackTargetWithOdometryCommand(turretSubsystem, limelightVisionSubsystem, westCoastDriveTrain, Constants.TRACK_TARGET_WITH_ODOMETRY_LIMELIGHT_ZONE);
     trackTargetWithRobotUsingOdometryCommand = new TrackTargetWithRobotUsingOdometryCommand(westCoastDriveTrain, 10);
-    turretSubsystem.setDefaultCommand(trackTargetWithOdometryCommand);
+
+    // Testing Command
+    simpleAutoDriveAndIntakeCommand = new SimpleAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 1, 1);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -250,9 +278,17 @@ public class RobotContainer {
     // joystick0Button2.toggleWhenPressed(trackTargetWithTurretCommand, true);
     // joystcik0Button5.toggleWhenPressed(trackTargetWithTurretCommand, true);
     joystick0Button1.toggleWhenPressed(trackTargetWithTurretCommand, true);
-    joystick0Button2.toggleWhenPressed(trackTargetWithRobotUsingOdometryCommand, true);
     joystick0Button3.toggleWhenPressed(AutoUtill.getAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 2, 2), true);
     joystick0Button6.toggleWhenPressed(teleopControlTurretCommand, true);
+
+   
+    js1Btn1.toggleWhenPressed(fieldOrientatedWestCoastDriveCommand, true);
+    js1Btn2.toggleWhenPressed(simpleAutoDriveAndIntakeCommand, true);
+    js1Btn3.toggleWhenPressed(simpleWestCoastDriveCommand, true);
+    js1Btn4.toggleWhenPressed(trackTargetWithRobotUsingOdometryCommand, true);
+    js1Btn5.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    js1Btn8.toggleWhenPressed(trackTargetWithOdometryCommand, true);
+
   }
 
   /**

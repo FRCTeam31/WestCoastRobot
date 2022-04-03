@@ -26,8 +26,8 @@ public final class Constants {
     public static final int PIXY_MAX_TIME_WITH_NO_TARGET = 10;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY = 180; // Target distance measurement
     public static double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX = 150; // Target horizontal value
-    public static double ROBOT_INITIAL_POS_X = 0; // 7.834;
-    public static double ROBOT_INITIAL_POS_Y = 0; // 3.112;
+    public static double ROBOT_INITIAL_POS_X = 1; // 7.834;
+    public static double ROBOT_INITIAL_POS_Y = 1; // 3.112;
 
     // Drive Train Constants
     // Drive Train Hardware Constants
@@ -106,6 +106,9 @@ public final class Constants {
     public static final double[] AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS = null;
     public static final double[] AUTO_SHOOTER_SPEED_RANGES = null;
 
+    // Climber Constants
+    public static final int CLIMBER_MOTOR_CAN_ID = 12;
+
     // Unit Conversion Constants
     public static final double FALCON_TICKS_TO_METERS = 1.0 / 2048.0 * 1.0 / 12.75 * 0.4785;
     public static final double FALCON_VELOCITY_TO_METERS_PER_SECOND = 1.948e-4 / 12.75;
@@ -114,8 +117,8 @@ public final class Constants {
     // (1 turret rotation per 45 motor rotations) degrees (360 degrees per rotation)
    
     // Trajectory Constants
-    public static final double TRAJECTORY_MAX_SPEED = 4;
-    public static final double TRAJECTORY_MAX_ACCELERATION = 2;
+    public static final double TRAJECTORY_MAX_SPEED = 2;
+    public static final double TRAJECTORY_MAX_ACCELERATION = 0.5;
 
     // Tracking Constants
     public static final double TRACK_TARGET_WITH_ROBOT_KP = 0;

@@ -37,7 +37,12 @@ public class AdvancedWestCoastDriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveTrain.advancedArcadeDrive(-joystick.getRawAxis(5), joystick.getRawAxis(4), squareInputs);
+    if(Math.abs(joystick.getRawAxis(5)) > 0.05 || Math.abs(joystick.getRawAxis(4)) > 0.05){
+      driveTrain.advancedArcadeDrive(-joystick.getRawAxis(5), joystick.getRawAxis(4), squareInputs);
+    }
+    else{
+      driveTrain.stopArcadeDrive();
+    }
   }
 
   // Called once the command ends or is interrupted.

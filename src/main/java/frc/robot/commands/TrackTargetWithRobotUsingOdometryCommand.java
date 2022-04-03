@@ -53,7 +53,7 @@ public class TrackTargetWithRobotUsingOdometryCommand extends CommandBase {
     double deltaY = Constants.FIELD_CENTER_Y_CORD - driveTrain.getPose().getY();
     double absoluteAngleToTarget = Math.toDegrees(Math.atan2(deltaX, deltaY));
     // Power Turning based on PID output
-    driveTrain.simpleArcadeDrive(0.0, anglePIDController.calculate(absoluteAngleToTarget, driveTrain.getHeading().getDegrees()), false);
+    driveTrain.simpleArcadeDrive(0.0, anglePIDController.calculate(-driveTrain.getHeading().getDegrees(), absoluteAngleToTarget), false);
 
     
   }

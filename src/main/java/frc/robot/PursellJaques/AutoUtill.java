@@ -44,8 +44,8 @@ public class AutoUtill {
     public static ParallelCommandGroup getAutoDriveAndIntakeCommand(WestCoastDriveTrain driveTrain, IntakeSubsystem intake, double distance, double intakeTime){
         // Calculate target pos (forward the distance in the same direction the robot is facing)
         Pose2d initialPose2d = driveTrain.getPose();
-        double deltaX = distance * Math.sin(initialPose2d.getRotation().getRadians());
-        double deltaY = distance * Math.cos(initialPose2d.getRotation().getRadians());
+        double deltaX = distance * Math.sin(-initialPose2d.getRotation().getRadians());
+        double deltaY = distance * Math.cos(-initialPose2d.getRotation().getRadians());
 
         Pose2d targetPose2d = new Pose2d(
             new Translation2d(initialPose2d.getX() + deltaX, initialPose2d.getY() + deltaY), 

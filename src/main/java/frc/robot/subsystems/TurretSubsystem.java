@@ -43,6 +43,7 @@ public class TurretSubsystem extends SubsystemBase {
   */
   public TurretSubsystem(WPI_TalonFX turretMotor) {
     this.turretMotor = turretMotor;
+    this.turretMotor.setNeutralMode(NeutralMode.Brake);
     turretAngleAlignmentConstant = 0;
     maxTurretAngle = null;
     targetAngle = this.getCurrentAngle();
@@ -94,10 +95,19 @@ public class TurretSubsystem extends SubsystemBase {
    * @param angle The angle, in degrees, that the turret should turn to
    */
   public void setTurretAbsoluteAngle(double angle){
+
+    
     if(maxTurretAngle != null){
       // If angle is outside of bounds, clamp it
       if(Math.abs(angle) > maxTurretAngle){
-        angle = Math.signum(angle) * maxTurretAngle;
+        // Check if the angle is valid but out of phase (e.g. -270 vs 90)
+        if(Math.abs(angle - Math.signum(angle) * 360) < maxTurretAngle){
+          angle = angle - Math.signum(angle) * 360;
+          System.out.println(angle);
+        }
+        else{
+          angle = Math.signum(angle) * maxTurretAngle;
+        }
       }
     }
 

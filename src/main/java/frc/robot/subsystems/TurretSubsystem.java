@@ -94,19 +94,20 @@ public class TurretSubsystem extends SubsystemBase {
    * If a maxTurretAngle has been set, the turret will not spin past that point
    * @param angle The angle, in degrees, that the turret should turn to
    */
-  public void setTurretAbsoluteAngle(double angle){
-
+  public void setTurretAbsoluteAngle(double inputAngle){
+    inputAngle = inputAngle % 360;
+    double angle = inputAngle;
     
     if(maxTurretAngle != null){
       // If angle is outside of bounds, clamp it
-      if(Math.abs(angle) > maxTurretAngle){
+      if(Math.abs(inputAngle) > maxTurretAngle){
         // Check if the angle is valid but out of phase (e.g. -270 vs 90)
-        if(Math.abs(angle - Math.signum(angle) * 360) < maxTurretAngle){
-          angle = angle - Math.signum(angle) * 360;
+        if(Math.abs(inputAngle - Math.signum(inputAngle) * 360) < maxTurretAngle){
+          angle = inputAngle - Math.signum(inputAngle) * 360;
           System.out.println(angle);
         }
         else{
-          angle = Math.signum(angle) * maxTurretAngle;
+          angle = Math.signum(inputAngle) * maxTurretAngle;
         }
       }
     }

@@ -33,6 +33,7 @@ import frc.robot.commands.SimpleAutoDriveAndIntakeCommand;
 import frc.robot.commands.SimpleWestCoastDriveCommand;
 import frc.robot.commands.TeleopControlIntakeCommand;
 import frc.robot.commands.TeleopControlTurretCommand;
+import frc.robot.commands.TrackBallWithPixyCommand;
 import frc.robot.commands.TrackTargetWithOdometryCommand;
 import frc.robot.commands.TrackTargetWithRobotUsingOdometryCommand;
 import frc.robot.commands.TrackTargetWithTurretCommand;
@@ -133,6 +134,7 @@ public class RobotContainer {
   private TrackTargetWithTurretCommand trackTargetWithTurretCommand;
   private TrackTargetWithOdometryCommand trackTargetWithOdometryCommand;
   private TrackTargetWithRobotUsingOdometryCommand trackTargetWithRobotUsingOdometryCommand;
+  private TrackBallWithPixyCommand trackBallWithPixyCommand;
 
   // Testing Commands
   private SimpleAutoDriveAndIntakeCommand simpleAutoDriveAndIntakeCommand;
@@ -271,6 +273,7 @@ public class RobotContainer {
     trackTargetWithTurretCommand = new TrackTargetWithTurretCommand(turretSubsystem, limelightVisionSubsystem);
     trackTargetWithOdometryCommand = new TrackTargetWithOdometryCommand(turretSubsystem, limelightVisionSubsystem, westCoastDriveTrain, Constants.TRACK_TARGET_WITH_ODOMETRY_LIMELIGHT_ZONE);
     trackTargetWithRobotUsingOdometryCommand = new TrackTargetWithRobotUsingOdometryCommand(westCoastDriveTrain, 10);
+    trackBallWithPixyCommand = new TrackBallWithPixyCommand(westCoastDriveTrain, pixyVisionSubsystem, 5);
 
     // Testing Command
     simpleAutoDriveAndIntakeCommand = new SimpleAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 1, 1);
@@ -300,6 +303,7 @@ public class RobotContainer {
     js1Btn4.toggleWhenPressed(trackTargetWithRobotUsingOdometryCommand, true);
     js1Btn5.toggleWhenPressed(trackTargetWithTurretCommand, true);
     js1Btn8.toggleWhenPressed(trackTargetWithOdometryCommand, true);
+    js1Btn9.whenPressed(trackBallWithPixyCommand, true);
 
   }
 

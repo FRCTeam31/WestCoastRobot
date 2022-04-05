@@ -10,6 +10,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
@@ -46,6 +47,8 @@ public class WestCoastDriveTrain extends SubsystemBase {
       Constants.DRIVE_TRAIN_PID_KI, Constants.DRIVE_TRAIN_PID_KD);
   private double leftPIDAccumulator = 0;
   private double rightPIDAccumulator = 0;
+  private SlewRateLimiter leftLimiter;
+  private SlewRateLimiter rightLimiter;
 
   /**
    * Creates a new WestCoastDriveTrain.
@@ -90,6 +93,9 @@ public class WestCoastDriveTrain extends SubsystemBase {
     // driveOdometry = new DifferentialDriveOdometry(getHeading());
     driveOdometry = new DifferentialDriveOdometry(getHeading(), new Pose2d(Constants.ROBOT_INITIAL_POS_X, Constants.ROBOT_INITIAL_POS_Y, getHeading()));
     differentialDrive = new DifferentialDrive(this.leftMotors[0], this.rightMotors[0]);
+
+    leftLimiter = new SlewRateLimiter(12);
+    rightLimiter = new SlewRateLimiter(12);
   }
 
   @Override
@@ -142,7 +148,7 @@ public class WestCoastDriveTrain extends SubsystemBase {
     double rightFeedForwardValue = feedforward.calculate(rightTargetSpeed);
     rightPIDAccumulator += rightPIDController.calculate(rightMotors[0].getSelectedSensorVelocity() * Constants.FALCON_VELOCITY_TO_METERS_PER_SECOND, rightTargetSpeed);
     double rightVoltage = rightFeedForwardValue + rightPIDAccumulator;
-    this.driveWithVoltage(leftVoltage, rightVoltage);
+    this.driveWithVoltageAndLimiter(leftVoltage, rightVoltage);
   }
 
   /**
@@ -154,6 +160,10 @@ public class WestCoastDriveTrain extends SubsystemBase {
   public void driveWithVoltage(double leftVoltage, double rightVoltage) {
     leftMotors[0].setVoltage(leftVoltage);
     rightMotors[0].setVoltage(rightVoltage);
+  }
+
+  public void driveWithVoltageAndLimiter(double leftVoltage, double rightVoltage){
+    driveWithVoltage(leftLimiter.calculate(leftVoltage), rightLimiter.calculate(rightVoltage));
   }
 
   /**

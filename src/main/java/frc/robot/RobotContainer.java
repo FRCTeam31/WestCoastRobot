@@ -36,6 +36,8 @@ import frc.robot.commands.TeleopControlTurretCommand;
 import frc.robot.commands.TrackTargetWithOdometryCommand;
 import frc.robot.commands.TrackTargetWithRobotUsingOdometryCommand;
 import frc.robot.commands.TrackTargetWithTurretCommand;
+import frc.robot.commands.UseClimberCommand;
+import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightVisionSubsystem;
 import frc.robot.subsystems.PixyVisionSubsystem;
@@ -118,6 +120,10 @@ public class RobotContainer {
   // Shooter Subsystem
   private ShooterSubsystem shooterSubsystem;
   private SetShooterSpeedCommand setShooterSpeedCommand;
+
+  // CLimbing Subsystem
+  private ClimbingSubsystem climbingSubsystem;
+  private UseClimberCommand useClimberCommand;
 
   // Automation Trajectories
   private Trajectory firstTrajectory;
@@ -251,6 +257,12 @@ public class RobotContainer {
     setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, js1, shooterSubsystem);
     shooterSubsystem.setDefaultCommand(setShooterSpeedCommand);
 
+    // CLimber Subsystem
+    WPI_TalonFX climbingMotor = new WPI_TalonFX(Constants.CLIMBER_MOTOR_CAN_ID);
+    climbingSubsystem = new ClimbingSubsystem(climbingMotor);
+    useClimberCommand = new UseClimberCommand(climbingSubsystem, js1, 1);
+    climbingSubsystem.setDefaultCommand(useClimberCommand);
+
     // Automation Trajectories
     this.firstTrajectory = firstTrajectory;
     this.secondTrajectory = secondTrajectory;
@@ -278,7 +290,7 @@ public class RobotContainer {
     // joystick0Button2.toggleWhenPressed(trackTargetWithTurretCommand, true);
     // joystcik0Button5.toggleWhenPressed(trackTargetWithTurretCommand, true);
     joystick0Button1.toggleWhenPressed(trackTargetWithTurretCommand, true);
-    joystick0Button3.toggleWhenPressed(AutoUtill.getAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 2, 2), true);
+    joystick0Button3.toggleWhenPressed(AutoUtill.getAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 2, 2).andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0)), true);
     joystick0Button6.toggleWhenPressed(teleopControlTurretCommand, true);
 
    
@@ -295,6 +307,7 @@ public class RobotContainer {
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
+   * 
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous

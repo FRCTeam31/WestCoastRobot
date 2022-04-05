@@ -36,7 +36,7 @@ public class PixyVisionSubsystem extends SubsystemBase {
   */
   public PixyVisionSubsystem(int maxTicksWithNoTarget, int signature) {
     pixy = Pixy2.createInstance(new SPILink());
-    System.out.println("PIXY CODE: " + pixy.init(5));
+    System.out.println("PIXY CODE: " + pixy.init(1));
     this.maxTicksWithNoTarget = maxTicksWithNoTarget;
     this.signature = signature;
     xFilter = LinearFilter.singlePoleIIR(0.075, 0.02);

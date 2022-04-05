@@ -29,7 +29,7 @@ public class ClimbingSubsystem extends SubsystemBase {
     // max: 1159798.000000
     double currentPose = climbingMotor.getSelectedSensorPosition();
 
-    if(currentPose > 100159798.000000){
+    if(currentPose > -1159798.000000){
       // Climbing is at its max
       if(power < 0){
         climbingMotor.set(power);

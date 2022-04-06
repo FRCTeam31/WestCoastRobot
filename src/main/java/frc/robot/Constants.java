@@ -19,15 +19,15 @@ public final class Constants {
 
     // User Input Constants
     public static final int JOYSTICK_0_PORT_NUMBER = 0;
-    public static final int CURRENT_BALL_SIGNATURE = 1;
+    public static final int CURRENT_BALL_SIGNATURE = 1; // 1 = blue
 
     // Sensor Constants
     public static final int LIMELIGHT_MAX_TIME_WITH_NO_TARGET = 10;
     public static final int PIXY_MAX_TIME_WITH_NO_TARGET = 10;
     public static  double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY = 180; // Target distance measurement
     public static double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX = 150; // Target horizontal value
-    public static double ROBOT_INITIAL_POS_X = 1; // 7.834;
-    public static double ROBOT_INITIAL_POS_Y = 1; // 3.112;
+    public static double ROBOT_INITIAL_POS_X = -0.5; // 7.834;
+    public static double ROBOT_INITIAL_POS_Y = 0; // 3.112;
 
     // Drive Train Constants
     // Drive Train Hardware Constants
@@ -53,25 +53,25 @@ public final class Constants {
     public static final double DRIVE_TRAIN_FALCON_KI = 0;
     public static final double DRIVE_TRAIN_FALCON_KD = 0;
     public static final double DRIVE_TRAIN_FALCON_KF = 0;
-    public static final double DRIVE_TRAIN_MAX_WHEEL_SPEED_METER_PER_SECOND = 5;
+    public static final double DRIVE_TRAIN_MAX_WHEEL_SPEED_METER_PER_SECOND = 3;
 
     // Drive Train Control Constants
-    public static final double SAFE_DRIVE_RATE = 0.3;
+    public static final double SAFE_DRIVE_RATE = 0.5;
     public static final double SAFE_INTAKE_POWER = 0.4;
     public static double SAFE_TURN_RATE = 0.1;
 
 
  
     // Track Ball with pixy command constants
-    public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 1e-2;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI = 0;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD = 0;
-    public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KD = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KD = 1e-2;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KI = 0;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP = 0;
-    public static final double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY_TOLERANCE = 0;
-    public static final double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX_TOLERANCE = 0;
-    public static final int TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TIME_IN_TARGET_AREA = 0;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY_TOLERANCE = 15;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TX_TOLERANCE = 15;
+    public static final int TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TIME_IN_TARGET_AREA = 10;
 
     // Drive Train Command Constants
     public static final boolean SIMPLE_WEST_COAST_DRIVE_COMMAND_SQUARE_INPUTS = true;
@@ -86,7 +86,7 @@ public final class Constants {
     public static final int TELEOP_BALL_INTAKE_JOYSTICK_AXIS = 1;
     // Turret Subsystem
     public static final int TURRET_MOTOR_CAN_ID = 7;
-    public static final double TURRET_MAX_ANGLE = 100;
+    public static final double TURRET_MAX_ANGLE = 75;
     public static final double TURRET_MOTOR_KP = 0.2;
     public static final double TURRET_MOTOR_KI = 0;
     public static final double TURRET_MOTOR_KD = 0;
@@ -99,7 +99,7 @@ public final class Constants {
     public static final double SHOOTER_MOTOR_KI = 0;
     public static final double SHOOTER_MOTOR_KD = 0;
     public static final double SHOOTER_MOTOR_KF = 0;
-    public static final double MAX_SHOOTER_SPEED = 12000; //2400
+    public static final double MAX_SHOOTER_SPEED = 24000; //24000
     public static final int SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS = 2;
     public static final int SET_SHOOTER_SPEED_BOTTOM_SHOOTER_MOTOR_AXIS = 0;
     public static final double[] AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS = null;
@@ -121,12 +121,18 @@ public final class Constants {
     public static final double TRAJECTORY_MAX_ACCELERATION = 0.5;
 
     // Tracking Constants
-    public static final double TRACK_TARGET_WITH_ROBOT_KP = 0;
+    public static final double TRACK_TARGET_WITH_ROBOT_KP = 1e-2;
     public static final double TRACK_TARGET_WITH_ROBOT_KI = 0;
     public static final double TRACK_TARGET_WITH_ROBOT_KD = 0;
-    public static final double TRACK_TARGET_WITH_ROBOT_TOLERANCE = 0;
+    public static final double TRACK_TARGET_WITH_ROBOT_TOLERANCE = 10;
     public static final int TRACK_TARGET_WITH_ROBOT_MAX_TIME_IN_TOLERANCE = 0;
     public static final double TRACK_TARGET_WITH_ODOMETRY_LIMELIGHT_ZONE = 0;
+
+    public static final double TURN_TO_ANGLE_KD = 0;
+
+    public static final double TURN_TO_ANGLE_KI = 0;
+
+    public static final double TURN_TO_ANGLE_KP = 0;
 
 
 

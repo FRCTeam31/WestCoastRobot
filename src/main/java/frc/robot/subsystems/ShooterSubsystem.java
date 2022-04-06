@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -46,6 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
     topMotor.set(ControlMode.Velocity, shooterSpeeds.topMotorSpeed);
     bottomMotor.set(ControlMode.Velocity, -shooterSpeeds.bottomMotorSpeed);
     targetShooterSpeeds = shooterSpeeds;
+    System.out.println(shooterSpeeds.bottomMotorSpeed);
   }
   
   /**

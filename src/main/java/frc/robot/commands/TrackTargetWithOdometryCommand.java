@@ -59,7 +59,7 @@ public class TrackTargetWithOdometryCommand extends CommandBase {
     // Calculate angle to goal
     double deltaX = Constants.FIELD_CENTER_X_CORD - driveTrain.getPose().getX();
     double deltaY = Constants.FIELD_CENTER_Y_CORD - driveTrain.getPose().getY();
-    double absoluteAngleToTarget = Math.toDegrees(Math.atan2(deltaX, deltaY));
+    double absoluteAngleToTarget = Math.toDegrees(Math.atan2(-deltaY, deltaX));
     // Determine whether to use odometry or limelight to track the target
     TargetTrackingType trackingType;
     if(limelight.getFilteredV() == 0){
@@ -88,7 +88,8 @@ public class TrackTargetWithOdometryCommand extends CommandBase {
     // Power the turret based on the tracking type
     if(trackingType == TargetTrackingType.Odometry){
       // Track using Odometry
-      turret.setTurretAbsoluteAngle(absoluteAngleToTarget + driveTrain.getHeading().getDegrees());
+      turret.setTurretAbsoluteAngle(absoluteAngleToTarget - driveTrain.getHeading().getDegrees());
+      System.out.println(absoluteAngleToTarget);
       // Set the relative angle to the absolute angle - the robot's current angle
     }
     else if(trackingType == TargetTrackingType.Limelight){

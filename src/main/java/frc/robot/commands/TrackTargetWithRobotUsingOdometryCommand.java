@@ -51,7 +51,7 @@ public class TrackTargetWithRobotUsingOdometryCommand extends CommandBase {
     // Calculate angle to goal
     double deltaX = Constants.FIELD_CENTER_X_CORD - driveTrain.getPose().getX();
     double deltaY = Constants.FIELD_CENTER_Y_CORD - driveTrain.getPose().getY();
-    double absoluteAngleToTarget = Math.toDegrees(Math.atan2(deltaX, deltaY));
+    double absoluteAngleToTarget = Math.toDegrees(Math.atan2(-deltaY, deltaX));
     // Power Turning based on PID output
     driveTrain.simpleArcadeDrive(0.0, anglePIDController.calculate(-driveTrain.getHeading().getDegrees(), absoluteAngleToTarget), false);
 

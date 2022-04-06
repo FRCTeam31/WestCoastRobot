@@ -29,7 +29,9 @@ import frc.robot.PursellJaques.AutoUtill;
 import frc.robot.commands.AdvancedWestCoastDriveCommand;
 import frc.robot.commands.FieldOrientatedWestCoastDriveCommand;
 import frc.robot.commands.SetShooterSpeedCommand;
+import frc.robot.commands.ShootBallAtSetSpeedCommand;
 import frc.robot.commands.SimpleAutoDriveAndIntakeCommand;
+import frc.robot.commands.SimpleAuton;
 import frc.robot.commands.SimpleWestCoastDriveCommand;
 import frc.robot.commands.TeleopControlIntakeCommand;
 import frc.robot.commands.TeleopControlTurretCommand;
@@ -121,6 +123,8 @@ public class RobotContainer {
   // Shooter Subsystem
   private ShooterSubsystem shooterSubsystem;
   private SetShooterSpeedCommand setShooterSpeedCommand;
+  private ShootBallAtSetSpeedCommand shootLowGoal;
+  private ShootBallAtSetSpeedCommand shootFirstBall;
 
   // CLimbing Subsystem
   private ClimbingSubsystem climbingSubsystem;
@@ -135,6 +139,7 @@ public class RobotContainer {
   private TrackTargetWithOdometryCommand trackTargetWithOdometryCommand;
   private TrackTargetWithRobotUsingOdometryCommand trackTargetWithRobotUsingOdometryCommand;
   private TrackBallWithPixyCommand trackBallWithPixyCommand;
+  private SimpleAuton simpleAuton;
 
   // Testing Commands
   private SimpleAutoDriveAndIntakeCommand simpleAutoDriveAndIntakeCommand;
@@ -258,6 +263,8 @@ public class RobotContainer {
     shooterSubsystem = new ShooterSubsystem(topShooterMotor, bottomShooterMotor);
     setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, js1, shooterSubsystem);
     shooterSubsystem.setDefaultCommand(setShooterSpeedCommand);
+    shootLowGoal = new ShootBallAtSetSpeedCommand(shooterSubsystem, intakeSubsystem, 1, 1, 0.2 * Constants.MAX_SHOOTER_SPEED);
+    shootFirstBall = new ShootBallAtSetSpeedCommand(shooterSubsystem, intakeSubsystem, 1, 1, 0.4 * Constants.MAX_SHOOTER_SPEED);
 
     // CLimber Subsystem
     WPI_TalonFX climbingMotor = new WPI_TalonFX(Constants.CLIMBER_MOTOR_CAN_ID);
@@ -274,9 +281,10 @@ public class RobotContainer {
     trackTargetWithOdometryCommand = new TrackTargetWithOdometryCommand(turretSubsystem, limelightVisionSubsystem, westCoastDriveTrain, Constants.TRACK_TARGET_WITH_ODOMETRY_LIMELIGHT_ZONE);
     trackTargetWithRobotUsingOdometryCommand = new TrackTargetWithRobotUsingOdometryCommand(westCoastDriveTrain, 10);
     trackBallWithPixyCommand = new TrackBallWithPixyCommand(westCoastDriveTrain, pixyVisionSubsystem, 5);
+    simpleAuton = new SimpleAuton(westCoastDriveTrain, turretSubsystem, shooterSubsystem, intakeSubsystem);
 
     // Testing Command
-    simpleAutoDriveAndIntakeCommand = new SimpleAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 1, 1);
+    simpleAutoDriveAndIntakeCommand = new SimpleAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 1, 1, true);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -292,7 +300,8 @@ public class RobotContainer {
     // joystick0Button1.toggleWhenPressed(fieldOrientatedWestCoastDriveCommand, true);
     // joystick0Button2.toggleWhenPressed(trackTargetWithTurretCommand, true);
     // joystcik0Button5.toggleWhenPressed(trackTargetWithTurretCommand, true);
-    joystick0Button1.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    // joystick0Button1.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    joystick0Button1.whenPressed(simpleAuton);
     joystick0Button3.toggleWhenPressed(AutoUtill.getAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 2, 2).andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0)), true);
     joystick0Button6.toggleWhenPressed(teleopControlTurretCommand, true);
 

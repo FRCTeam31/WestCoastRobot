@@ -20,18 +20,21 @@ public class SimpleAutoDriveAndIntakeCommand extends CommandBase {
   private double driveTime;
   private WestCoastDriveTrain driveTrain;
   private IntakeSubsystem intake; 
+  private boolean reversed;
 
   /** Creates a new AutoDriveAndIntakeCommand. 
    * @param intakeTime The time in seconds that the robot should drive forward
    * @param driveTime The time in seconds that the robot should intake
+   * @param reversed True if the robot should drive backward
   */
-  public SimpleAutoDriveAndIntakeCommand(WestCoastDriveTrain driveTrain, IntakeSubsystem intake, double intakeTime, double driveTime) {
+  public SimpleAutoDriveAndIntakeCommand(WestCoastDriveTrain driveTrain, IntakeSubsystem intake, double intakeTime, double driveTime, boolean reversed) {
     this.intake = intake;
     this.driveTrain = driveTrain;
     this.driveTime = driveTime;
     this.intakeTime = intakeTime;
     intakeTimer = new Timer();
     driveTimer = new Timer();
+    this.reversed = reversed;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.driveTrain);
@@ -53,7 +56,12 @@ public class SimpleAutoDriveAndIntakeCommand extends CommandBase {
   public void execute() {
     // Drive the robot until the timer is past the time
     if(driveTimer.get() < driveTime){
-      driveTrain.simpleArcadeDrive(Constants.SAFE_DRIVE_RATE, 0, false);
+      if(reversed == true){
+        driveTrain.simpleArcadeDrive(-Constants.SAFE_DRIVE_RATE, 0, false);
+      }
+      else{
+        driveTrain.simpleArcadeDrive(Constants.SAFE_DRIVE_RATE, 0, false);
+      }
     }
     else{
       driveTrain.simpleArcadeDrive(0, 0, false);

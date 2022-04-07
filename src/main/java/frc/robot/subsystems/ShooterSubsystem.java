@@ -36,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase {
    * @return an object describing the speeds of the top and bottom motors
    */
   public ShooterSpeeds getShooterSpeeds() {
-    return new ShooterSpeeds(topMotor.getSelectedSensorPosition(), bottomMotor.getSelectedSensorPosition());
+    return new ShooterSpeeds(topMotor.getSelectedSensorVelocity(), bottomMotor.getSelectedSensorVelocity());
   }
 
   /**
@@ -48,7 +48,7 @@ public class ShooterSubsystem extends SubsystemBase {
     topMotor.set(ControlMode.Velocity, shooterSpeeds.topMotorSpeed);
     bottomMotor.set(ControlMode.Velocity, -shooterSpeeds.bottomMotorSpeed);
     targetShooterSpeeds = shooterSpeeds;
-    System.out.println(shooterSpeeds.bottomMotorSpeed);
+    // System.out.println(shooterSpeeds.bottomMotorSpeed);
   }
   
   /**

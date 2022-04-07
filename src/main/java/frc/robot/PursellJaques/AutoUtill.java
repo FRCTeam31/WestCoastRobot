@@ -8,6 +8,7 @@ import java.util.List;
 
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
@@ -44,8 +45,8 @@ public class AutoUtill {
     public static ParallelCommandGroup getAutoDriveAndIntakeCommand(WestCoastDriveTrain driveTrain, IntakeSubsystem intake, double distance, double intakeTime){
         // Calculate target pos (forward the distance in the same direction the robot is facing)
         Pose2d initialPose2d = driveTrain.getPose();
-        double deltaX = distance * Math.sin(-initialPose2d.getRotation().getRadians());
-        double deltaY = distance * Math.cos(-initialPose2d.getRotation().getRadians());
+        double deltaX = distance * Math.cos(initialPose2d.getRotation().getRadians());
+        double deltaY = distance * Math.sin(initialPose2d.getRotation().getRadians());
 
         Pose2d targetPose2d = new Pose2d(
             new Translation2d(initialPose2d.getX() + deltaX, initialPose2d.getY() + deltaY), 
@@ -76,7 +77,7 @@ public class AutoUtill {
         // Return Command
         return new ParallelCommandGroup(
             ramseteCommand,
-            new AutoPowerIntake(intake, intakeTime)
+            new AutoPowerIntake(intake, intakeTime, Constants.SAFE_INTAKE_POWER)
         );
     }
 
@@ -105,9 +106,43 @@ public class AutoUtill {
             autoSetShooterSpeed,
             new SequentialCommandGroup(
                 new WaitCommand(intakeWaittime),
-                new AutoPowerIntake(intake, intakePowerTime)
+                new AutoPowerIntake(intake, intakePowerTime, Constants.SAFE_INTAKE_POWER)
             )
 
         );
+    }
+
+    public static Command getRamseteCommandToCoordinate(WestCoastDriveTrain driveTrain, double xDistance, double yDistance, Rotation2d angle){
+
+        Pose2d initialPose2d = new Pose2d(new Translation2d(), new Rotation2d());
+
+        Pose2d targetPose2d = new Pose2d(
+            new Translation2d(xDistance, yDistance), 
+            initialPose2d.getRotation());
+        
+        // Create RamseteCommand
+        TrajectoryConfig config = new TrajectoryConfig(Constants.TRAJECTORY_MAX_SPEED * 3, Constants.TRAJECTORY_MAX_ACCELERATION * 3);
+        config.setKinematics(driveTrain.getKinematics());
+
+        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            initialPose2d, 
+            List.of(), 
+            targetPose2d, 
+            config);
+
+        SequentialCommandGroup ramseteCommand = new RamseteCommand(
+            trajectory, 
+            driveTrain::getPose, 
+            new RamseteController(), 
+            driveTrain.getFeedForward(), 
+            driveTrain.getKinematics(), 
+            driveTrain::getWheelSpeeds, 
+            driveTrain.getLeftPIDController(), 
+            driveTrain.getRightPIDController(), 
+            driveTrain::driveWithVoltage,
+            driveTrain).andThen(() -> driveTrain.stopArcadeDrive());
+        
+        // Return Command
+        return ramseteCommand;
     }
 }

@@ -26,12 +26,16 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.PursellJaques.AutoUtill;
+import frc.robot.PursellJaques.ShooterSpeeds;
 import frc.robot.commands.AdvancedWestCoastDriveCommand;
+import frc.robot.commands.AutoSetShooterSpeed;
 import frc.robot.commands.FieldOrientatedWestCoastDriveCommand;
+import frc.robot.commands.SetPermanentShooterSpeed;
 import frc.robot.commands.SetShooterSpeedCommand;
 import frc.robot.commands.ShootBallAtSetSpeedCommand;
 import frc.robot.commands.SimpleAutoDriveAndIntakeCommand;
 import frc.robot.commands.SimpleAuton;
+import frc.robot.commands.SimpleThreeBallAuto;
 import frc.robot.commands.SimpleWestCoastDriveCommand;
 import frc.robot.commands.TeleopControlIntakeCommand;
 import frc.robot.commands.TeleopControlTurretCommand;
@@ -39,6 +43,7 @@ import frc.robot.commands.TrackBallWithPixyCommand;
 import frc.robot.commands.TrackTargetWithOdometryCommand;
 import frc.robot.commands.TrackTargetWithRobotUsingOdometryCommand;
 import frc.robot.commands.TrackTargetWithTurretCommand;
+import frc.robot.commands.TurnToAngleWithPIDCommand;
 import frc.robot.commands.UseClimberCommand;
 import frc.robot.subsystems.ClimbingSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -261,7 +266,7 @@ public class RobotContainer {
     topShooterMotor.selectProfileSlot(0, 0);
     bottomShooterMotor.selectProfileSlot(0, 0);
     shooterSubsystem = new ShooterSubsystem(topShooterMotor, bottomShooterMotor);
-    setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, js1, shooterSubsystem);
+    setShooterSpeedCommand = new SetShooterSpeedCommand(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS, js1, joystick0, shooterSubsystem);
     shooterSubsystem.setDefaultCommand(setShooterSpeedCommand);
     shootLowGoal = new ShootBallAtSetSpeedCommand(shooterSubsystem, intakeSubsystem, 1, 1, 0.2 * Constants.MAX_SHOOTER_SPEED);
     shootFirstBall = new ShootBallAtSetSpeedCommand(shooterSubsystem, intakeSubsystem, 1, 1, 0.4 * Constants.MAX_SHOOTER_SPEED);
@@ -281,7 +286,6 @@ public class RobotContainer {
     trackTargetWithOdometryCommand = new TrackTargetWithOdometryCommand(turretSubsystem, limelightVisionSubsystem, westCoastDriveTrain, Constants.TRACK_TARGET_WITH_ODOMETRY_LIMELIGHT_ZONE);
     trackTargetWithRobotUsingOdometryCommand = new TrackTargetWithRobotUsingOdometryCommand(westCoastDriveTrain, 10);
     trackBallWithPixyCommand = new TrackBallWithPixyCommand(westCoastDriveTrain, pixyVisionSubsystem, 5);
-    simpleAuton = new SimpleAuton(westCoastDriveTrain, turretSubsystem, shooterSubsystem, intakeSubsystem);
 
     // Testing Command
     simpleAutoDriveAndIntakeCommand = new SimpleAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 1, 1, true);
@@ -297,24 +301,44 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // joystick0Button1.toggleWhenPressed(fieldOrientatedWestCoastDriveCommand, true);
-    // joystick0Button2.toggleWhenPressed(trackTargetWithTurretCommand, true);
-    // joystcik0Button5.toggleWhenPressed(trackTargetWithTurretCommand, true);
-    // joystick0Button1.toggleWhenPressed(trackTargetWithTurretCommand, true);
-    joystick0Button1.whenPressed(simpleAuton);
-    joystick0Button3.toggleWhenPressed(AutoUtill.getAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 2, 2).andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0)), true);
-    joystick0Button6.toggleWhenPressed(teleopControlTurretCommand, true);
+    // // joystick0Button1.toggleWhenPressed(fieldOrientatedWestCoastDriveCommand, true);
+    // // joystick0Button2.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    // // joystcik0Button5.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    // // joystick0Button1.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    // joystick0Button3.toggleWhenPressed(AutoUtill.getAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 2, 2).andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0)), true);
+    // joystick0Button6.toggleWhenPressed(teleopControlTurretCommand, true);
 
    
-    js1Btn1.toggleWhenPressed(fieldOrientatedWestCoastDriveCommand, true);
-    js1Btn2.toggleWhenPressed(simpleAutoDriveAndIntakeCommand, true);
-    js1Btn3.toggleWhenPressed(simpleWestCoastDriveCommand, true);
-    js1Btn4.toggleWhenPressed(trackTargetWithRobotUsingOdometryCommand, true);
-    js1Btn5.toggleWhenPressed(trackTargetWithTurretCommand, true);
-    js1Btn8.toggleWhenPressed(trackTargetWithOdometryCommand, true);
-    js1Btn9.whenPressed(trackBallWithPixyCommand, true);
+    // js1Btn1.toggleWhenPressed(AutoUtill.getAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 2, 2).andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0)), true);
+    // js1Btn2.toggleWhenPressed(new ShootBallAtSetSpeedCommand(shooterSubsystem, intakeSubsystem, 2, 2, 1), true);
+    // js1Btn3.toggleWhenPressed(simpleWestCoastDriveCommand, true);
+    // js1Btn4.toggleWhenPressed(trackTargetWithRobotUsingOdometryCommand, true);
+    // js1Btn5.toggleWhenPressed(trackTargetWithTurretCommand, true);
+    // js1Btn8.toggleWhenPressed(new AutoSetShooterSpeed(shooterSubsystem, limelightVisionSubsystem, Constants.AUTO_SHOOTER_SPEED_RANGES, Constants.AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS, Constants.AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS), true);
+    // js1Btn9.whenPressed(trackBallWithPixyCommand, true);
+
+    // Use trigger to turn on auto set shooting speed
+    js1Btn1.toggleWhenPressed(new AutoSetShooterSpeed(shooterSubsystem, limelightVisionSubsystem, Constants.AUTO_SHOOTER_SPEED_RANGES, Constants.AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS, Constants.AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS), true);
+    
+    // Use top button to turn on turret atuo control
+    js1Btn2.toggleWhenPressed(trackTargetWithTurretCommand, true);
+
+    // Button 8 to set the shooter to shoot onto the low goal
+    js1Btn8.toggleWhenPressed(new SetPermanentShooterSpeed(
+      shooterSubsystem, 
+      new ShooterSpeeds(Constants.MAX_SHOOTER_SPEED * 0.3, Constants.MAX_SHOOTER_SPEED * 0.3)),
+      true); 
+
+    // Button 6 to set the shooter to shoot onto the high goal from a set range
+    js1Btn6.toggleWhenPressed(new SetPermanentShooterSpeed(
+      shooterSubsystem, 
+      new ShooterSpeeds(Constants.MAX_SHOOTER_SPEED * 0.5, Constants.MAX_SHOOTER_SPEED * 0.6)),
+      true); 
+    
+
 
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -351,7 +375,13 @@ public class RobotContainer {
       westCoastDriveTrain::driveWithVoltage,
       westCoastDriveTrain);
 
-    return secondCommand.andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0));
+
+    // return secondCommand.andThen(() -> westCoastDriveTrain.driveWithVoltage(0, 0));
+    System.out.println("AUTO COMMAND WAS JUST STOLEN!!!!!");
+    westCoastDriveTrain.resetPos();
+
+    // return new SimpleThreeBallAuto(westCoastDriveTrain, turretSubsystem, shooterSubsystem, intakeSubsystem, limelightVisionSubsystem, pixyVisionSubsystem, new AutoSetShooterSpeed(shooterSubsystem, limelightVisionSubsystem, Constants.AUTO_SHOOTER_SPEED_RANGES, Constants.AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS, Constants.AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS));
+    return new SimpleAuton(westCoastDriveTrain, turretSubsystem, shooterSubsystem, intakeSubsystem, limelightVisionSubsystem, new AutoSetShooterSpeed(shooterSubsystem, limelightVisionSubsystem, Constants.AUTO_SHOOTER_SPEED_RANGES, Constants.AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS, Constants.AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS));
   }
 }
   

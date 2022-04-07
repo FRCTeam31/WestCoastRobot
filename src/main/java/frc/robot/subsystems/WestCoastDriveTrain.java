@@ -13,6 +13,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -94,8 +95,8 @@ public class WestCoastDriveTrain extends SubsystemBase {
     driveOdometry = new DifferentialDriveOdometry(getHeading(), new Pose2d(Constants.ROBOT_INITIAL_POS_X, Constants.ROBOT_INITIAL_POS_Y, getHeading()));
     differentialDrive = new DifferentialDrive(this.leftMotors[0], this.rightMotors[0]);
 
-    leftLimiter = new SlewRateLimiter(100);
-    rightLimiter = new SlewRateLimiter(100);
+    leftLimiter = new SlewRateLimiter(12);
+    rightLimiter = new SlewRateLimiter(12);
   }
 
   @Override
@@ -294,6 +295,14 @@ public class WestCoastDriveTrain extends SubsystemBase {
    */
   public double getAngle(){
     return navx.getAngle();
+  }
+  
+  public void resetPos(){
+    leftMotors[0].setSelectedSensorPosition(0);
+    rightMotors[0].setSelectedSensorPosition(0);
+    // this.driveOdometry.resetPosition(new Pose2d(new Translation2d(), getHeading()), getHeading());;
+    this.driveOdometry.resetPosition(new Pose2d(new Translation2d(), new Rotation2d()), getHeading());;
+
   }
 
 }

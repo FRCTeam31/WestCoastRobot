@@ -56,9 +56,14 @@ public final class Constants {
     public static final double DRIVE_TRAIN_MAX_WHEEL_SPEED_METER_PER_SECOND = 3;
 
     // Drive Train Control Constants
-    public static final double SAFE_DRIVE_RATE = 0.5;
-    public static final double SAFE_INTAKE_POWER = 0.4;
+    public static final double SAFE_DRIVE_RATE = 0.3;
+    public static final double SAFE_INTAKE_POWER = 0.5;
     public static double SAFE_TURN_RATE = 0.1;
+
+    // Drive Train Turn To Angle Constants
+    public static final double TURN_TO_ANGLE_KD = 0;
+    public static final double TURN_TO_ANGLE_KI = 0;
+    public static final double TURN_TO_ANGLE_KP = 3.8e-3;
 
 
  
@@ -102,9 +107,9 @@ public final class Constants {
     public static final double MAX_SHOOTER_SPEED = 24000; //24000
     public static final int SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS = 2;
     public static final int SET_SHOOTER_SPEED_BOTTOM_SHOOTER_MOTOR_AXIS = 0;
-    public static final double[] AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS = null;
-    public static final double[] AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS = null;
-    public static final double[] AUTO_SHOOTER_SPEED_RANGES = null;
+    public static final double[] AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS = {-10070, -10422, -10154, -10125, -10723, -9999};
+    public static final double[] AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS = {4580, 4911, 7077, 14266, 16470, 16830};
+    public static final double[] AUTO_SHOOTER_SPEED_RANGES = {14.6, 11.4, 6.6, 3.9, 2.6, 0.7};
 
     // Climber Constants
     public static final int CLIMBER_MOTOR_CAN_ID = 12;
@@ -117,8 +122,8 @@ public final class Constants {
     // (1 turret rotation per 45 motor rotations) degrees (360 degrees per rotation)
    
     // Trajectory Constants
-    public static final double TRAJECTORY_MAX_SPEED = 2;
-    public static final double TRAJECTORY_MAX_ACCELERATION = 0.5;
+    public static final double TRAJECTORY_MAX_SPEED = 1;
+    public static final double TRAJECTORY_MAX_ACCELERATION = 0.25;
 
     // Tracking Constants
     public static final double TRACK_TARGET_WITH_ROBOT_KP = 1e-2;
@@ -128,11 +133,7 @@ public final class Constants {
     public static final int TRACK_TARGET_WITH_ROBOT_MAX_TIME_IN_TOLERANCE = 0;
     public static final double TRACK_TARGET_WITH_ODOMETRY_LIMELIGHT_ZONE = 0;
 
-    public static final double TURN_TO_ANGLE_KD = 0;
 
-    public static final double TURN_TO_ANGLE_KI = 0;
-
-    public static final double TURN_TO_ANGLE_KP = 0;
 
 
 

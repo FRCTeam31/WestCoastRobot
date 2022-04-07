@@ -29,27 +29,29 @@ public class ClimbingSubsystem extends SubsystemBase {
     // max: 1159798.000000
     double currentPose = climbingMotor.getSelectedSensorPosition();
 
-    if(currentPose > -1159798.000000){
-      // Climbing is at its max
-      if(power < 0){
-        climbingMotor.set(power);
-      }
-      else{
-        climbingMotor.set(0);
-      }
-    }
-    else if(currentPose < -1713166.000000){
-      // Climbing is at its min
-      if(power > 0){
-        climbingMotor.set(power);
-      }
-      else{
-        climbingMotor.set(0);
-      }
-    }
-    else{
-      climbingMotor.set(power);
-    }
+    // if(currentPose > -1159798.000000){
+    //   // Climbing is at its max
+    //   if(power < 0){
+    //     climbingMotor.set(power);
+    //   }
+    //   else{
+    //     climbingMotor.set(0);
+    //   }
+    // }
+    // else if(currentPose < -1713166.000000){
+    //   // Climbing is at its min
+    //   if(power > 0){
+    //     climbingMotor.set(power);
+    //   }
+    //   else{
+    //     climbingMotor.set(0);
+    //   }
+    // }
+    // else{
+    //   climbingMotor.set(power);
+    // }
+
+    climbingMotor.set(power);
 
     
     System.out.println(power);

@@ -58,7 +58,7 @@ public class AutoSetShooterSpeed extends CommandBase {
 
     shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(
       topMotorMap.getInterpolatedValue(ty), 
-      bottomMotorMap.getInterpolatedValue(ty))
+      -bottomMotorMap.getInterpolatedValue(ty))
     );
 
 

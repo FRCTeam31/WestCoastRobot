@@ -43,7 +43,12 @@ public class TurnToAngleWithPIDCommand extends CommandBase {
   @Override
   public void execute() {
     driveTrain.advancedArcadeDrive(0, anglePID.calculate(driveTrain.getAngle()), false);
-
+    if(Math.abs(anglePID.getPositionError()) < 5){
+      counter++;
+    }
+    else{
+      counter = 0;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -53,7 +58,11 @@ public class TurnToAngleWithPIDCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(timer.get())
-    return false;
+    if(timer.get() > maxTime || counter > 10){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }

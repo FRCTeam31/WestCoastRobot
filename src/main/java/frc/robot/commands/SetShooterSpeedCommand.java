@@ -14,15 +14,17 @@ public class SetShooterSpeedCommand extends CommandBase {
   //instance Variables
   private ShooterSubsystem shooterSubsystem;
   private Joystick joystick;
+  private Joystick sj;
   private int topMotorAxis;
   private int bottomMotorAxis;
   /** Creates a new SetShooterSpeedCommand. */
-  public SetShooterSpeedCommand(int topMotorAxis, int bottomMotorAxis, Joystick joystick, ShooterSubsystem shooterSubsystem) {
+  public SetShooterSpeedCommand(int topMotorAxis, int bottomMotorAxis, Joystick joystick, Joystick sj, ShooterSubsystem shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.topMotorAxis = topMotorAxis;
     this.bottomMotorAxis = bottomMotorAxis;
     this.joystick = joystick;
     this.shooterSubsystem = shooterSubsystem;
+    this.sj = sj;
 
     addRequirements(shooterSubsystem);
   }
@@ -35,7 +37,8 @@ public class SetShooterSpeedCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(joystick.getRawAxis(topMotorAxis) * Constants.MAX_SHOOTER_SPEED,  joystick.getRawAxis(bottomMotorAxis) * Constants.MAX_SHOOTER_SPEED));
+    shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(joystick.getRawAxis(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS) * Constants.MAX_SHOOTER_SPEED,  joystick.getRawAxis(2) * Constants.SET_SHOOTER_SPEED_BOTTOM_SHOOTER_MOTOR_AXIS));
+    // System.out.println(joystick.getRawAxis(Const));
   }
 
   // Called once the command ends or is interrupted.

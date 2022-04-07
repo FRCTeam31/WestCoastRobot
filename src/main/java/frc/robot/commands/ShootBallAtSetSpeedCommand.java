@@ -47,7 +47,7 @@ public class ShootBallAtSetSpeedCommand extends CommandBase {
       shooter.stopMotion();
     }
     if(timer.get() < intakeTime){
-      intake.driveIntake(Constants.SAFE_INTAKE_POWER);
+      intake.driveIntake(Constants.SAFE_INTAKE_POWER * 2);
     }
     else{
       intake.stopIntake();

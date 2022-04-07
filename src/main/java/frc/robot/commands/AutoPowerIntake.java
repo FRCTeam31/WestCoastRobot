@@ -16,14 +16,17 @@ public class AutoPowerIntake extends CommandBase {
   double intakeTime;
   Timer intakeTimer;
   IntakeSubsystem intake;
+  double intakePower;
   /** Creates a new AutoPowerIntake. 
    * @param intake The intake for the command to control
    * @param intakeTime The time in seconds that the intake should be powered
+   * @param intakePower The power to give the intake
   */
-  public AutoPowerIntake(IntakeSubsystem intake, double intakeTime) {
+  public AutoPowerIntake(IntakeSubsystem intake, double intakeTime, double intakePower) {
     this.intake = intake;
     this.intakeTime = intakeTime;
     intakeTimer = new Timer();
+    this.intakePower = intakePower;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(this.intake);
@@ -40,7 +43,7 @@ public class AutoPowerIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.driveIntake(Constants.SAFE_INTAKE_POWER);
+    intake.driveIntake(intakePower);
   }
 
   // Called once the command ends or is interrupted.

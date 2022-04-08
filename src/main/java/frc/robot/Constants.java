@@ -19,7 +19,7 @@ public final class Constants {
 
     // User Input Constants
     public static final int JOYSTICK_0_PORT_NUMBER = 0;
-    public static final int CURRENT_BALL_SIGNATURE = 1; // 1 = blue
+    public static final int CURRENT_BALL_SIGNATURE = 1; // 1 = blue 2 = Red
 
     // Sensor Constants
     public static final int LIMELIGHT_MAX_TIME_WITH_NO_TARGET = 10;
@@ -63,15 +63,15 @@ public final class Constants {
     // Drive Train Turn To Angle Constants
     public static final double TURN_TO_ANGLE_KD = 0;
     public static final double TURN_TO_ANGLE_KI = 0;
-    public static final double TURN_TO_ANGLE_KP = 3.8e-3;
+    public static final double TURN_TO_ANGLE_KP = 4.2e-3; //3.8e-3
 
 
  
     // Track Ball with pixy command constants
-    public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 1e-2;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KP = 4.67e-3;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KI = 0;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_ANGLE_KD = 0;
-    public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KD = 1e-2;
+    public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KD = 2.7e-3;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KI = 0;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_DISTANCE_KP = 0;
     public static final double TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY_TOLERANCE = 15;
@@ -107,9 +107,9 @@ public final class Constants {
     public static final double MAX_SHOOTER_SPEED = 24000; //24000
     public static final int SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS = 2;
     public static final int SET_SHOOTER_SPEED_BOTTOM_SHOOTER_MOTOR_AXIS = 0;
-    public static final double[] AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS = {-10070, -10422, -10154, -10125, -10723, -9999};
-    public static final double[] AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS = {4580, 4911, 7077, 14266, 16470, 16830};
-    public static final double[] AUTO_SHOOTER_SPEED_RANGES = {14.6, 11.4, 6.6, 3.9, 2.6, 0.7};
+    public static final double[] AUTO_SHOTER_SPEED_BOTTOM_MOTOR_SPEEDS = {-10830, -12380, -12390, -10990, -13610};//{-10070, -10422, -10154, -10125, -10723, -9999};
+    public static final double[] AUTO_SHOOTER_SPEED_TOP_MOTOR_SPEEDS = {4930, 4930, 4470, 8020, 6170};//{4580, 4911, 7077, 14266, 16470, 16830};
+    public static final double[] AUTO_SHOOTER_SPEED_RANGES = {12.39, -2.5, 2.8, -4.6, -8.5};//{14.6, 11.4, 6.6, 3.9, 2.6, 0.7};
 
     // Climber Constants
     public static final int CLIMBER_MOTOR_CAN_ID = 12;

@@ -57,8 +57,8 @@ public class AutoSetShooterSpeed extends CommandBase {
     Double ty = limelight.getFilteredY();
 
     shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(
-      topMotorMap.getInterpolatedValue(ty), 
-      -bottomMotorMap.getInterpolatedValue(ty))
+      topMotorMap.getInterpolatedValue(ty) * 1.1, 
+      -bottomMotorMap.getInterpolatedValue(ty) * 1.3)
     );
 
 
@@ -67,7 +67,7 @@ public class AutoSetShooterSpeed extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(0, 0));
+    // shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(0, 0));
   }
 
   // Returns true when the command should end.

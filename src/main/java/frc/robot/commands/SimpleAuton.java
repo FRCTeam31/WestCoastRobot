@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.PursellJaques.AutoUtill;
+import frc.robot.PursellJaques.ShooterSpeeds;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightVisionSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -30,16 +31,18 @@ public class SimpleAuton extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       // new SimpleAutoDriveAndIntakeCommand(driveTrain, intakeSubsystem, 2, 2, false),
-      AutoUtill.getAutoDriveAndIntakeCommand(driveTrain, intakeSubsystem, 2, 5).andThen(() -> driveTrain.driveWithVoltage(0, 0)),
+      AutoUtill.getAutoDriveAndIntakeCommand(driveTrain, intakeSubsystem, 2, 3).andThen(() -> driveTrain.driveWithVoltage(0, 0)),
       new TurnToAngleWithPIDCommand(driveTrain, 180, 3),
       new AutoPowerIntake(intakeSubsystem, 0.7, -Constants.SAFE_INTAKE_POWER),
       new WaitCommand(0.1),
-      new ShootBallAtSetSpeedCommand(shooter, intakeSubsystem, 0.2, 0, 0.42 * Constants.MAX_SHOOTER_SPEED),
       new ParallelCommandGroup(
         // new ShootBallAtSetSpeedCommand(shooter, intakeSubsystem, 5, 5, 0.42 * Constants.MAX_SHOOTER_SPEED), 
         autoShootSpeed,
-        new AutoPowerIntake(intakeSubsystem, 5, 1),
-        new TrackTargetWithTurretCommand(turret, limelight))
+        new SequentialCommandGroup(
+          new WaitCommand(1.5),
+          new AutoPowerIntake(intakeSubsystem, 5, 1)),
+        new TrackTargetWithTurretCommand(turret, limelight)).andThen(() -> shooter.simpleSetShooterSpeeds(new ShooterSpeeds(0, 0))
+        )
       
 
     );

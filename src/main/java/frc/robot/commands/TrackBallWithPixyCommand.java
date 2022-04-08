@@ -9,6 +9,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.subsystems.PixyVisionSubsystem;
 import frc.robot.subsystems.WestCoastDriveTrain;
@@ -55,14 +56,16 @@ public class TrackBallWithPixyCommand extends CommandBase {
       // There is no current pixy target
       westCoastDriveTrain.simpleArcadeDrive(0, Constants.SAFE_TURN_RATE, false);
       timeInTargetArea = 0;
+      System.out.println("NO TARGET");
     }
     else{
+      System.out.println("TERGET FOUND");
       // There is a current pixy target
       double x = pixy.getFilteredX();
       double y = pixy.getFilteredY();
-      double linearPower = distancePID.calculate(x);
-      double angularPower = anglePID.calculate(y);
-      westCoastDriveTrain.simpleArcadeDrive(linearPower, angularPower, false);
+      double linearPower = distancePID.calculate(y);
+      double angularPower = anglePID.calculate(x);
+      westCoastDriveTrain.simpleArcadeDrive(linearPower, -angularPower, false);
 
       // Update ball in target zone counter
       if(Math.abs(distancePID.getPositionError()) < Constants.TRACK_BALL_WITH_PIXY_COMMAND_TARGET_TY_TOLERANCE &&
@@ -71,6 +74,7 @@ public class TrackBallWithPixyCommand extends CommandBase {
       }
     }
 
+    System.out.println("SUS");
   }
 
 

@@ -285,7 +285,7 @@ public class RobotContainer {
     trackTargetWithTurretCommand = new TrackTargetWithTurretCommand(turretSubsystem, limelightVisionSubsystem);
     trackTargetWithOdometryCommand = new TrackTargetWithOdometryCommand(turretSubsystem, limelightVisionSubsystem, westCoastDriveTrain, Constants.TRACK_TARGET_WITH_ODOMETRY_LIMELIGHT_ZONE);
     trackTargetWithRobotUsingOdometryCommand = new TrackTargetWithRobotUsingOdometryCommand(westCoastDriveTrain, 10);
-    trackBallWithPixyCommand = new TrackBallWithPixyCommand(westCoastDriveTrain, pixyVisionSubsystem, 5);
+    trackBallWithPixyCommand = new TrackBallWithPixyCommand(westCoastDriveTrain, pixyVisionSubsystem, 100);
 
     // Testing Command
     simpleAutoDriveAndIntakeCommand = new SimpleAutoDriveAndIntakeCommand(westCoastDriveTrain, intakeSubsystem, 1, 1, true);
@@ -323,10 +323,12 @@ public class RobotContainer {
     // Use top button to turn on turret atuo control
     js1Btn2.toggleWhenPressed(trackTargetWithTurretCommand, true);
 
+    js1Btn4.whenPressed(trackBallWithPixyCommand);
+
     // Button 8 to set the shooter to shoot onto the low goal
     js1Btn8.toggleWhenPressed(new SetPermanentShooterSpeed(
       shooterSubsystem, 
-      new ShooterSpeeds(Constants.MAX_SHOOTER_SPEED * 0.3, Constants.MAX_SHOOTER_SPEED * 0.3)),
+      new ShooterSpeeds(4580, 4580)),
       true); 
 
     // Button 6 to set the shooter to shoot onto the high goal from a set range

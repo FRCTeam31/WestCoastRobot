@@ -95,8 +95,8 @@ public class WestCoastDriveTrain extends SubsystemBase {
     driveOdometry = new DifferentialDriveOdometry(getHeading(), new Pose2d(Constants.ROBOT_INITIAL_POS_X, Constants.ROBOT_INITIAL_POS_Y, getHeading()));
     differentialDrive = new DifferentialDrive(this.leftMotors[0], this.rightMotors[0]);
 
-    leftLimiter = new SlewRateLimiter(12);
-    rightLimiter = new SlewRateLimiter(12);
+    leftLimiter = new SlewRateLimiter(30);
+    rightLimiter = new SlewRateLimiter(30);
   }
 
   @Override

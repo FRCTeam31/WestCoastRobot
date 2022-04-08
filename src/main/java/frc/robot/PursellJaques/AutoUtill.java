@@ -53,7 +53,7 @@ public class AutoUtill {
             initialPose2d.getRotation());
         
         // Create RamseteCommand
-        TrajectoryConfig config = new TrajectoryConfig(Constants.TRAJECTORY_MAX_SPEED, Constants.TRAJECTORY_MAX_ACCELERATION);
+        TrajectoryConfig config = new TrajectoryConfig(Constants.TRAJECTORY_MAX_SPEED * 3, 3 * Constants.TRAJECTORY_MAX_ACCELERATION);
         config.setKinematics(driveTrain.getKinematics());
 
         Trajectory trajectory = TrajectoryGenerator.generateTrajectory(

@@ -37,8 +37,11 @@ public class SetShooterSpeedCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(joystick.getRawAxis(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS) * Constants.MAX_SHOOTER_SPEED,  joystick.getRawAxis(2) * Constants.SET_SHOOTER_SPEED_BOTTOM_SHOOTER_MOTOR_AXIS));
+    shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(joystick.getRawAxis(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS) * Constants.MAX_SHOOTER_SPEED,  joystick.getRawAxis(Constants.SET_SHOOTER_SPEED_TOP_SHOOTER_MOTOR_AXIS) * Constants.MAX_SHOOTER_SPEED));
     // System.out.println(joystick.getRawAxis(Const));
+    // shooterSubsystem.simpleSetShooterSpeeds(new ShooterSpeeds(
+    //   sj.getRawAxis(topMotorAxis) * Constants.MAX_SHOOTER_SPEED, 
+    //   joystick.getRawAxis(3) * Constants.MAX_SHOOTER_SPEED));
   }
 
   // Called once the command ends or is interrupted.
